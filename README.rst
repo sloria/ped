@@ -30,3 +30,9 @@ Changing the default editor
     # .zshrc or .bashrc
     # Use Sublime Text with ped
     export PED_EDITOR=subl
+
+
+Kudos
+-----
+
+This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
