@@ -11,7 +11,7 @@ import os
 import subprocess
 import sys
 
-__version__ = '1.0.1'
+__version__ = '1.0.2dev'
 
 def main():
     args = parse_args()
@@ -27,6 +27,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('module')
     parser.add_argument('-e', '--editor', type=str, dest='editor')
+    parser.add_argument('-v', '--version', action='version', version=__version__)
     return parser.parse_args()
 
 def ped(module, editor=None):
