@@ -15,7 +15,13 @@ __version__ = '1.0.0'
 
 def main():
     args = parse_args()
-    ped(module=args.module, editor=args.editor)
+    print('Editing {0}...'.format(args.module))
+    try:
+        ped(module=args.module, editor=args.editor)
+    except ImportError:
+        print('Could not find module in current environment: "{0}"'.format(args.module))
+        sys.exit(1)
+    print('...Done.')
 
 def parse_args():
     parser = argparse.ArgumentParser(description=__doc__)
