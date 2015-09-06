@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 """Open a Python module from the command line.
 
-Example: ped django
+Example: ped django.core.urlresolvers
 
 """
 import argparse
+import importlib
 import inspect
 import os
 import subprocess
@@ -31,7 +32,7 @@ def parse_args():
     return parser.parse_args()
 
 def ped(module, editor=None):
-    module = __import__(module)
+    module = importlib.import_module(module)
     fpath = find_file(module)
     edit_file(fpath, editor=editor)
 
