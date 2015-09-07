@@ -9,12 +9,13 @@ import argparse
 import importlib
 import inspect
 import os
+import shlex
 import subprocess
 import sys
 
 from .guess_module import guess_module
 
-__version__ = '1.2.1'
+__version__ = '1.3.0'
 
 def main():
     args = parse_args()
@@ -22,7 +23,8 @@ def main():
         ped(module=args.module, editor=args.editor)
     except ImportError:
         print('ERROR: Could not find module in '
-              'current environment: "{0}"'.format(args.module))
+              'current environment: "{0}"'.format(args.module),
+              file=sys.stderr)
         sys.exit(1)
     print('...Done.')
 
@@ -31,7 +33,7 @@ def parse_args():
         description=__doc__,
         formatter_class=argparse.RawTextHelpFormatter
     )
-    parser.add_argument('module', help='Python module to edit')
+    parser.add_argument('module', help='import path to module, function, or class')
     parser.add_argument('-e', '--editor', type=str, dest='editor', help='editor program')
     parser.add_argument('-v', '--version', action='version', version=__version__)
     return parser.parse_args()
@@ -49,7 +51,8 @@ def ped(module, editor=None):
             raise ImportError('Cannot find any module that matches "{0}"'.format(module))
     print('Editing {0}...'.format(module_name))
     fpath = find_file(obj)
-    edit_file(fpath, editor=editor)
+    lineno = find_source_lines(obj)
+    edit_file(fpath, lineno=lineno, editor=editor)
 
 
 def import_object(ipath):
@@ -69,14 +72,19 @@ def import_object(ipath):
         raise err
 
 # Adapted from IPython.core.oinspect.find_file
+def _get_wrapped(obj):
+    """Get the original object if wrapped in one or more @decorators"""
+    while safe_hasattr(obj, '__wrapped__'):
+        obj = obj.__wrapped__
+    return obj
+
 def find_file(obj):
     """Find the absolute path to the file where an object was defined.
 
     This is essentially a robust wrapper around `inspect.getabsfile`.
     """
     # get source if obj was decorated with @decorator
-    if safe_hasattr(obj, '__wrapped__'):
-        obj = obj.__wrapped__
+    obj = _get_wrapped(obj)
 
     fname = None
     try:
@@ -94,6 +102,30 @@ def find_file(obj):
         pass
     return fname
 
+# Adapted from IPython.core.oinspect.find_source_lines
+def find_source_lines(obj):
+    """Find the line number in a file where an object was defined.
+
+    This is essentially a robust wrapper around `inspect.getsourcelines`.
+
+    Returns None if no file can be found.
+    """
+    obj = _get_wrapped(obj)
+
+    try:
+        try:
+            lineno = inspect.getsourcelines(obj)[1]
+        except TypeError:
+            # For instances, try the class object like getsource() does
+            if hasattr(obj, '__class__'):
+                lineno = inspect.getsourcelines(obj.__class__)[1]
+            else:
+                lineno = None
+    except:
+        return None
+
+    return lineno
+
 def safe_hasattr(obj, attr):
     """In recent versions of Python, hasattr() only catches AttributeError.
     This catches all errors.
@@ -104,7 +136,7 @@ def safe_hasattr(obj, attr):
     except:
         return False
 
-# Adapted from click
+# Adapted from click._termui_impl
 def get_editor():
     for key in ('PED_EDITOR', 'VISUAL', 'EDITOR'):
         ret = os.environ.get(key)
@@ -117,10 +149,24 @@ def get_editor():
             return editor
     return 'vi'
 
-def edit_file(filename, editor=None):
+# Editors that support the +lineno option
+SUPPORTS_LINENO = set(['vim', 'vi', 'nvim', 'mvim', 'emacs', 'jed', 'nano'])
+
+def get_editor_command(filename, lineno=None, editor=None):
     editor = editor or get_editor()
+    # Enclose in quotes if necessary and legal
+    if ' ' in editor and os.path.isfile(editor) and editor[0] != '"':
+        editor = '"%s"' % editor
+    if lineno and shlex.split(editor)[0] in SUPPORTS_LINENO:
+        command = '{editor} +{lineno:d} "{filename}"'.format(**locals())
+    else:
+        command = '{editor} "{filename}"'.format(**locals())
+    return command
+
+def edit_file(filename, lineno=None, editor=None):
+    command = get_editor_command(filename, lineno=lineno, editor=editor)
     try:
-        result = subprocess.Popen('{0} "{1}"'.format(editor, filename), shell=True)
+        result = subprocess.Popen(command, shell=True)
         exit_code = result.wait()
         if exit_code != 0:
             print('{0}: Editing failed!'.format(editor), file=sys.stderr)

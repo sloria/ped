@@ -12,12 +12,10 @@ ped
 
 Open python modules in your text editor.
 
-::
+.. code-block:: bash
 
     $ ped django
     $ ped django.core.urlresolvers
-
-    # Classes and functions work, too
     $ ped django.views.generic.TemplateView
 
     # Partial name matching
@@ -44,7 +42,7 @@ Changing the default editor
 
 ``ped`` will try to find your favorite text editor. If you want to override the editor ``ped`` uses, set the ``PED_EDITOR`` environment variable.
 
-::
+.. code-block:: bash
 
     # .zshrc or .bashrc
     # Use Sublime Text with ped
@@ -59,6 +57,11 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 
 Changelog
 *********
+
+1.3.0
+-----
+
+- If a class or function is passed, the editor will open up the file at the correct line number (supported in many major editors)
 
 1.2.1
 -----

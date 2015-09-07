@@ -8,13 +8,13 @@ def test_ped_edits_file(mocker):
     mocker.patch('ped.edit_file')
     ped.ped('pytest')
     path = ped.find_file(pytest)
-    ped.edit_file.assert_called_once_with(path, editor=None)
+    ped.edit_file.assert_called_once_with(path, lineno=0, editor=None)
 
 def test_ped_edits_file_with_editor(mocker):
     mocker.patch('ped.edit_file')
     ped.ped('pytest', editor='nano')
     path = ped.find_file(pytest)
-    ped.edit_file.assert_called_once_with(path, editor='nano')
+    ped.edit_file.assert_called_once_with(path, lineno=0, editor='nano')
 
 def test_import_obj():
     import argparse
@@ -30,3 +30,10 @@ def test_guess_module():
     assert 'argparse' in guess_module('argpar')
     assert 'argparse.ArgumentParser' in guess_module('argparse.Argu')
     assert guess_module('argparse')[0] == 'argparse'
+
+def test_get_editor_command():
+    assert ped.get_editor_command('foo.py', editor='vi') == 'vi "foo.py"'
+    assert ped.get_editor_command('foo.py', lineno=2, editor='vi') == 'vi +2 "foo.py"'
+    assert ped.get_editor_command('foo.py', lineno=2, editor='kate') == 'kate "foo.py"'
+    assert ped.get_editor_command(
+        'foo.py', lineno=2, editor='emacs') == 'emacs +2 "foo.py"'
