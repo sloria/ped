@@ -11,7 +11,7 @@ import os
 import subprocess
 import sys
 
-__version__ = '1.0.2'
+__version__ = '1.1.0'
 
 def main():
     args = parse_args()
@@ -34,9 +34,23 @@ def parse_args():
     parser.add_argument('-v', '--version', action='version', version=__version__)
     return parser.parse_args()
 
+def import_object(ipath):
+    try:
+        return importlib.import_module(ipath)
+    except ImportError as err:
+        module_name, symbol_name = ipath.rsplit('.', 1)
+        mod = importlib.import_module(module_name)
+        try:
+            return getattr(mod, symbol_name)
+        except AttributeError:
+            raise ImportError(
+                'Cannot import "{0}" from "{1}"'.format(symbol_name, module_name)
+            )
+        raise err
+
 def ped(module, editor=None):
-    module = importlib.import_module(module)
-    fpath = find_file(module)
+    obj = import_object(module)
+    fpath = find_file(obj)
     edit_file(fpath, editor=editor)
 
 # Adapted from IPython.core.oinspect.find_file

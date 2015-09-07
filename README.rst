@@ -8,7 +8,12 @@ Open a python module in your text editor.
 
     $ ped django
     $ ped django.core.urlresolvers
-    $ ped django.shortcuts -e vim
+
+    # Classes and functions work, too
+    $ ped django.views.generic.TemplateView
+
+    # Specify which editor to use
+    $ PED_EDITOR=vim ped django.shortcuts
 
 
 ``ped`` will find your modules in the currently-active virtual environment.
@@ -41,6 +46,11 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 
 Changelog
 *********
+
+1.1.0
+-----
+
+- Add support for editing functions and classes.
 
 1.0.2
 -----
