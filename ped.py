@@ -12,7 +12,7 @@ import os
 import subprocess
 import sys
 
-__version__ = '1.0.2dev'
+__version__ = '1.0.2'
 
 def main():
     args = parse_args()
