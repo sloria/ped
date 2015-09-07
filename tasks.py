@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
-import os
 import webbrowser
 
 from invoke import task, run
 
 @task
 def test():
-    run('py.test test_ped.py')
+    import pytest
+    pytest.main(['test_ped.py'])
 
 @task
 def clean():
     run("rm -rf build")
     run("rm -rf dist")
     run("rm -rf ped.egg-info")
-    clean_docs()
     print("Cleaned up.")
 
 @task
