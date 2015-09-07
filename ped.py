@@ -3,7 +3,6 @@
 """Open a Python module from the command line.
 
 Example: ped django.core.urlresolvers
-
 """
 import argparse
 import importlib
@@ -20,14 +19,18 @@ def main():
     try:
         ped(module=args.module, editor=args.editor)
     except ImportError:
-        print('Could not find module in current environment: "{0}"'.format(args.module))
+        print('ERROR: Could not find module in '
+              'current environment: "{0}"'.format(args.module))
         sys.exit(1)
     print('...Done.')
 
 def parse_args():
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('module')
-    parser.add_argument('-e', '--editor', type=str, dest='editor')
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawTextHelpFormatter
+    )
+    parser.add_argument('module', help='Python module to edit')
+    parser.add_argument('-e', '--editor', type=str, dest='editor', help='editor program')
     parser.add_argument('-v', '--version', action='version', version=__version__)
     return parser.parse_args()
 
