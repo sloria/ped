@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Open a Python module from the command line.
+"""Open Python modules in your text editor.
 
 Example: ped django.core.urlresolvers
 """
@@ -11,11 +11,12 @@ import os
 import subprocess
 import sys
 
-__version__ = '1.1.0'
+from .guess_module import guess_module
+
+__version__ = '1.2.0dev'
 
 def main():
     args = parse_args()
-    print('Editing {0}...'.format(args.module))
     try:
         ped(module=args.module, editor=args.editor)
     except ImportError:
@@ -34,10 +35,28 @@ def parse_args():
     parser.add_argument('-v', '--version', action='version', version=__version__)
     return parser.parse_args()
 
+def ped(module, editor=None):
+    module_name = module
+    try:
+        obj = import_object(module_name)
+    except ImportError:
+        guessed = guess_module(module)
+        if guessed:
+            module_name = guessed[0]
+            obj = import_object(module_name)
+        else:
+            raise ImportError('Cannot find any module that matches "{0}"'.format(module))
+    print('Editing {0}...'.format(module_name))
+    fpath = find_file(obj)
+    edit_file(fpath, editor=editor)
+
+
 def import_object(ipath):
     try:
         return importlib.import_module(ipath)
     except ImportError as err:
+        if '.' not in ipath:
+            raise err
         module_name, symbol_name = ipath.rsplit('.', 1)
         mod = importlib.import_module(module_name)
         try:
@@ -47,11 +66,6 @@ def import_object(ipath):
                 'Cannot import "{0}" from "{1}"'.format(symbol_name, module_name)
             )
         raise err
-
-def ped(module, editor=None):
-    obj = import_object(module)
-    fpath = find_file(obj)
-    edit_file(fpath, editor=editor)
 
 # Adapted from IPython.core.oinspect.find_file
 def find_file(obj):

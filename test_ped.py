@@ -2,6 +2,7 @@
 import pytest
 
 import ped
+from ped.guess_module import guess_module
 
 def test_ped_edits_file(mocker):
     mocker.patch('ped.edit_file')
@@ -24,3 +25,8 @@ def test_import_obj():
     assert cls is argparse.ArgumentParser
     func = ped.import_object('math.acos')
     assert func is math.acos
+
+def test_guess_module():
+    assert 'argparse' in guess_module('argpar')
+    assert 'argparse.ArgumentParser' in guess_module('argparse.Argu')
+    assert guess_module('argparse')[0] == 'argparse'

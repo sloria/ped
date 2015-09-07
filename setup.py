@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import re
-import sys
 from setuptools import setup
 
 
@@ -20,7 +19,7 @@ def find_version(fname):
         raise RuntimeError('Cannot find version information')
     return version
 
-__version__ = find_version('ped.py')
+__version__ = find_version('ped/__init__.py')
 
 
 def read(fname):
@@ -30,6 +29,7 @@ def read(fname):
 
 setup(
     name='ped',
+    packages=['ped'],
     version=__version__,
     description='Open a Python module from the command line.',
     long_description=read('README.rst'),
@@ -52,10 +52,9 @@ setup(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: System :: Shells',
     ],
-    py_modules=['ped'],
     entry_points={
         'console_scripts': [
             "ped = ped:main"
         ]
-   }
+    }
 )

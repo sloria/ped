@@ -60,3 +60,5 @@ README.html
 
 # PyBuilder
 target/
+
+.konchrc

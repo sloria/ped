@@ -2,7 +2,11 @@
 ped
 ===
 
-Open a python module in your text editor.
+.. image:: https://img.shields.io/pypi/v/ped.svg
+    :target: https://pypi.python.org/pypi/ped
+    :alt: Latest version
+
+Open python modules in your text editor.
 
 ::
 
@@ -11,6 +15,11 @@ Open a python module in your text editor.
 
     # Classes and functions work, too
     $ ped django.views.generic.TemplateView
+
+    # Partial name matching
+    $ ped django.http.resp
+    Editing django.http.response...
+    ...Done.
 
     # Specify which editor to use
     $ PED_EDITOR=vim ped django.shortcuts
@@ -46,6 +55,11 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 
 Changelog
 *********
+
+1.2.0
+-----
+
+- Add partial name matching.
 
 1.1.0
 -----
