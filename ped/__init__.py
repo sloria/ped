@@ -14,7 +14,7 @@ import sys
 
 from .guess_module import guess_module
 
-__version__ = '1.2.0'
+__version__ = '1.2.1'
 
 def main():
     args = parse_args()

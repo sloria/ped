@@ -60,6 +60,11 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
+1.2.1
+-----
+
+- Fix for Py2 compatibility.
+
 1.2.0
 -----
 
