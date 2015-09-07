@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import webbrowser
+import sys
 
 from invoke import task, run
 
 @task
 def test():
     import pytest
-    pytest.main(['test_ped.py'])
+    retcode = pytest.main(['test_ped.py'])
+    sys.exit(retcode)
 
 @task
 def clean():

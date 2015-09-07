@@ -1,0 +1,18 @@
+# Config file for automatic testing at travis-ci.org
+
+language: python
+
+# Faster, containerized builds
+sudo: false
+
+python:
+  - "3.4"
+  - "3.3"
+  - "2.7"
+  - "2.6"
+
+install:
+  - pip install -U .
+  - pip install -r dev-requirements.txt
+
+script: invoke test

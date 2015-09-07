@@ -6,6 +6,10 @@ ped
     :target: https://pypi.python.org/pypi/ped
     :alt: Latest version
 
+.. image:: https://img.shields.io/travis/sloria/ped.svg
+    :target: https://travis-ci.org/sloria/ped
+    :alt: Travis-CI
+
 Open python modules in your text editor.
 
 ::
