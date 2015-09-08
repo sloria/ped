@@ -10,7 +10,7 @@ ped
     :target: https://travis-ci.org/sloria/ped
     :alt: Travis-CI
 
-Quickly open python modules in your text editor.
+Quickly open Python modules in your text editor.
 
 .. code-block:: bash
 
@@ -58,8 +58,8 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
-1.4.0 (unreleased)
-------------------
+1.4.0
+-----
 
 - Add ``--info`` argument for outputting name, file path, and line number of modules/functions/classes.
 - Fix: Support line numbers in gvim.
