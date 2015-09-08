@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import argparse
 import pytest
+from scripttest import TestFileEnvironment
 
 import ped
 from ped.guess_module import guess_module
@@ -45,3 +46,46 @@ def test_get_info():
     assert name == 'argparse.ArgumentParser'
     assert fpath == ped.find_file(argparse.ArgumentParser)
     assert lineno == ped.find_source_lines(argparse.ArgumentParser)
+
+
+# Acceptance tests
+
+import email
+import email.mime
+from email.mime.message import MIMEMessage
+
+class TestAcceptance:
+
+    @pytest.fixture
+    def env(self):
+        return TestFileEnvironment()
+
+    def test_cli_version(self, env):
+        res = env.run('ped', '-v')
+        assert res.stdout == ped.__version__ + '\n'
+
+    def test_info(self, env):
+        res = env.run('ped', '-i', 'email')
+        name, path, lineno = res.stdout.split()
+        assert name == 'email'
+        assert path == ped.find_file(email)
+        assert lineno == str(ped.find_source_lines(email))
+
+    def test_info_no_lineno(self, env):
+        res = env.run('ped', '-i', 'email.mime')
+        name, path = res.stdout.split()
+        assert name == 'email.mime'
+        assert path == ped.find_file(email.mime)
+
+    def test_info_class(self, env):
+        res = env.run('ped', '-i', 'email.mime.message.Mime')
+        name, path, lineno = res.stdout.split()
+        assert name == 'email.mime.message.MIMEMessage'
+        assert path == ped.find_file(MIMEMessage)
+        assert lineno == str(ped.find_source_lines(MIMEMessage))
+
+    def test_info_not_found(self, env):
+        res = env.run('ped', '-i', 'notfound', expect_error=True)
+        assert res.returncode == 1
+        expected = 'ERROR: Could not find module in current environment: "notfound"\n'
+        assert res.stderr == expected

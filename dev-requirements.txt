@@ -3,3 +3,4 @@ pytest
 pytest-mock
 mock
 Sphinx>=1.2.2
+scripttest
