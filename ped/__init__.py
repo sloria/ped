@@ -48,7 +48,7 @@ def ped(module, editor=None, info=False):
     if info:
         out = '{0} {1}'.format(module_name, fpath)
         if lineno is not None:
-            out += ' L{0:d}'.format(lineno)
+            out += ' {0:d}'.format(lineno)
         print(out)
     else:
         if not info:
