@@ -20,13 +20,16 @@ __version__ = '1.4.0dev'
 def main():
     args = parse_args()
     try:
-        ped(module=args.module, editor=args.editor)
+        ped(
+            module=args.module,
+            editor=args.editor,
+            info=args.info,
+        )
     except ImportError:
         print('ERROR: Could not find module in '
               'current environment: "{0}"'.format(args.module),
               file=sys.stderr)
         sys.exit(1)
-    print('...Done.')
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -36,23 +39,43 @@ def parse_args():
     parser.add_argument('module', help='import path to module, function, or class')
     parser.add_argument('-e', '--editor', type=str, dest='editor', help='editor program')
     parser.add_argument('-v', '--version', action='version', version=__version__)
+    parser.add_argument('-i', '--info', action='store_true',
+        help='output name, file path, and line number (if applicable) of module')
     return parser.parse_args()
 
-def ped(module, editor=None):
-    module_name = module
+def ped(module, editor=None, info=False):
+    module_name, fpath, lineno = get_info(module)
+    if info:
+        out = '{0} {1}'.format(module_name, fpath)
+        if lineno is not None:
+            out += ' L{0:d}'.format(lineno)
+        print(out)
+    else:
+        if not info:
+            print('Editing {0}...'.format(module_name))
+        edit_file(fpath, lineno=lineno, editor=editor)
+        if not info:
+            print('...Done.')
+
+def get_info(ipath):
+    """Return module name, file path, and line number.
+
+    :param str ipath: Import path to module, function, or class. May be a partial name,
+        in which case we guess the import path.
+    """
+    module_name = ipath
     try:
         obj = import_object(module_name)
     except ImportError:
-        guessed = guess_module(module)
+        guessed = guess_module(ipath)
         if guessed:
             module_name = guessed[0]
             obj = import_object(module_name)
         else:
-            raise ImportError('Cannot find any module that matches "{0}"'.format(module))
-    print('Editing {0}...'.format(module_name))
+            raise ImportError('Cannot find any module that matches "{0}"'.format(ipath))
     fpath = find_file(obj)
     lineno = find_source_lines(obj)
-    edit_file(fpath, lineno=lineno, editor=editor)
+    return module_name, fpath, lineno
 
 
 def import_object(ipath):
@@ -169,10 +192,10 @@ def edit_file(filename, lineno=None, editor=None):
         result = subprocess.Popen(command, shell=True)
         exit_code = result.wait()
         if exit_code != 0:
-            print('{0}: Editing failed!'.format(editor), file=sys.stderr)
+            print('ERROR: Editing failed!', file=sys.stderr)
             sys.exit(1)
     except OSError as err:
-        print('{0}: Editing failed: {1}'.format(editor, err), file=sys.stderr)
+        print('ERROR: Editing failed: {1}'.format(editor, err), file=sys.stderr)
         sys.exit(1)
 
 

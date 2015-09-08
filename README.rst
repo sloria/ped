@@ -10,7 +10,7 @@ ped
     :target: https://travis-ci.org/sloria/ped
     :alt: Travis-CI
 
-Open python modules in your text editor.
+Quickly open python modules in your text editor.
 
 .. code-block:: bash
 
@@ -61,12 +61,13 @@ Changelog
 1.4.0 (unreleased)
 ------------------
 
+- Add ``--info`` argument for outputting name, file path, and line number of modules/functions/classes.
 - Fix: Support line numbers in gvim.
 
 1.3.0
 -----
 
-- If a class or function is passed, the editor will open up the file at the correct line number (supported in many major editors)
+- If a class or function is passed, the editor will open up the file at the correct line number (for supported editors).
 
 1.2.1
 -----

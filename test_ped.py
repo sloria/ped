@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import argparse
 import pytest
 
 import ped
@@ -38,3 +39,9 @@ def test_get_editor_command():
     assert ped.get_editor_command('foo.py', lineno=2, editor='kate') == 'kate "foo.py"'
     assert ped.get_editor_command(
         'foo.py', lineno=2, editor='emacs') == 'emacs +2 "foo.py"'
+
+def test_get_info():
+    name, fpath, lineno = ped.get_info('argparse.ArgumentPars')
+    assert name == 'argparse.ArgumentParser'
+    assert fpath == ped.find_file(argparse.ArgumentParser)
+    assert lineno == ped.find_source_lines(argparse.ArgumentParser)

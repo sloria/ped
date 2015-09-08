@@ -31,7 +31,7 @@ setup(
     name='ped',
     packages=['ped'],
     version=__version__,
-    description='Open Python modules from the command line.',
+    description='Quickly open Python modules in your text editor.',
     long_description=read('README.rst'),
     author='Steven Loria',
     author_email='sloria1@gmail.com',
