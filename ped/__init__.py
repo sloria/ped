@@ -195,7 +195,7 @@ def edit_file(filename, lineno=None, editor=None):
             print('ERROR: Editing failed!', file=sys.stderr)
             sys.exit(1)
     except OSError as err:
-        print('ERROR: Editing failed: {1}'.format(editor, err), file=sys.stderr)
+        print('ERROR: Editing failed: {0}'.format(err), file=sys.stderr)
         sys.exit(1)
 
 
