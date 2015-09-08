@@ -34,6 +34,7 @@ def test_guess_module():
 def test_get_editor_command():
     assert ped.get_editor_command('foo.py', editor='vi') == 'vi "foo.py"'
     assert ped.get_editor_command('foo.py', lineno=2, editor='vi') == 'vi +2 "foo.py"'
+    assert ped.get_editor_command('foo.py', lineno=2, editor='gvim') == 'gvim +2 "foo.py"'
     assert ped.get_editor_command('foo.py', lineno=2, editor='kate') == 'kate "foo.py"'
     assert ped.get_editor_command(
         'foo.py', lineno=2, editor='emacs') == 'emacs +2 "foo.py"'

@@ -15,7 +15,7 @@ import sys
 
 from .guess_module import guess_module
 
-__version__ = '1.3.0'
+__version__ = '1.4.0dev'
 
 def main():
     args = parse_args()
@@ -150,7 +150,7 @@ def get_editor():
     return 'vi'
 
 # Editors that support the +lineno option
-SUPPORTS_LINENO = set(['vim', 'vi', 'nvim', 'mvim', 'emacs', 'jed', 'nano'])
+SUPPORTS_LINENO = set(['vim', 'gvim', 'vi', 'nvim', 'mvim', 'emacs', 'jed', 'nano'])
 
 def get_editor_command(filename, lineno=None, editor=None):
     editor = editor or get_editor()

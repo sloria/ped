@@ -58,6 +58,11 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
+1.4.0 (unreleased)
+------------------
+
+- Fix: Support line numbers in gvim.
+
 1.3.0
 -----
 
