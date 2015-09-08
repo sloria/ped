@@ -54,6 +54,15 @@ import email
 import email.mime
 from email.mime.message import MIMEMessage
 
+def assert_in_output(s, res, message=None):
+    """Assert that a string is in either stdout or std err.
+    Included because banners are sometimes outputted to stderr.
+    """
+    assert any([
+        s in res.stdout,
+        s in res.stderr
+    ]), message or '{0} not in output'.format(s)
+
 class TestAcceptance:
 
     @pytest.fixture
@@ -61,8 +70,8 @@ class TestAcceptance:
         return TestFileEnvironment()
 
     def test_cli_version(self, env):
-        res = env.run('ped', '-v')
-        assert res.stdout == ped.__version__ + '\n'
+        res = env.run('ped', '-v', expect_error=True)
+        assert_in_output(ped.__version__ + '\n', res)
 
     def test_info(self, env):
         res = env.run('ped', '-i', 'email')
