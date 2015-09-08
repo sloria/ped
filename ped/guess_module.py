@@ -50,6 +50,10 @@ def get_possible_modules(name):
     completion_list = try_import('.'.join(mod[:-1]), True)
     return ['.'.join(mod[:-1] + [el]) for el in completion_list]
 
+def get_names_by_prefix(prefix):
+    for name in get_possible_modules(prefix):
+        if name.startswith(prefix):
+            yield name
 
 def get_root_modules():
     """Return a list containing the names of all the modules available in the
