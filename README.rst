@@ -54,6 +54,13 @@ Editor integrations
 
 - `vim-ped <https://github.com/sloria/vim-ped>`_
 
+Tab completion
+**************
+
+To install tab completion for ped commands in bash, run::
+
+    sudo python -m ped.bashcomplete
+
 Kudos
 *****
 
