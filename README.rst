@@ -59,7 +59,7 @@ Tab completion
 
 To install tab completion for ped commands in bash, run::
 
-    sudo python -m ped.bashcomplete
+    sudo python -m ped.bashcomplete /etc/bash_completion.d/
 
 Kudos
 *****
