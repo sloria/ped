@@ -51,11 +51,9 @@ def ped(module, editor=None, info=False):
             out += ' {0:d}'.format(lineno)
         print(out)
     else:
-        if not info:
-            print('Editing {0}...'.format(module_name))
+        print('Editing {0}...'.format(module_name))
         edit_file(fpath, lineno=lineno, editor=editor)
-        if not info:
-            print('...Done.')
+        print('...Done.')
 
 def get_info(ipath):
     """Return module name, file path, and line number.
