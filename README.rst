@@ -49,6 +49,11 @@ Changing the default editor
     export PED_EDITOR=subl
 
 
+Editor integrations
+*******************
+
+- `vim-ped <https://github.com/sloria/vim-ped>`_
+
 Kudos
 *****
 
