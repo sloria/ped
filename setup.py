@@ -56,5 +56,10 @@ setup(
         'console_scripts': [
             "ped = ped:main"
         ]
-    }
+    },
+    package_data={
+        'ped': [
+            "ped_bash_completion.sh",
+        ]
+    },
 )
