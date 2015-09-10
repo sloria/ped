@@ -89,7 +89,7 @@ Changelog
 1.5.0
 -----
 
-- Support tab-completion in bash and zsh.
+- Support tab-completion in bash and zsh. Thanks `Thomas Kluyver <https://github.com/takluyver>`_.
 
 1.4.0
 -----
