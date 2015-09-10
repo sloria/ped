@@ -15,7 +15,7 @@ import sys
 
 from .guess_module import guess_module, get_names_by_prefix
 
-__version__ = '1.5.0'
+__version__ = '1.5.0dev'
 
 def main():
     args = parse_args()

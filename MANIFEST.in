@@ -1,1 +1,4 @@
 include *.rst LICENSE NOTICE
+include ped/*.sh
+include ped/*.zsh
+include *.py
