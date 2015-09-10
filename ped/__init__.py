@@ -13,23 +13,26 @@ import shlex
 import subprocess
 import sys
 
-from .guess_module import guess_module
+from .guess_module import guess_module, get_names_by_prefix
 
-__version__ = '1.4.0'
+__version__ = '1.5.0'
 
 def main():
     args = parse_args()
-    try:
-        ped(
-            module=args.module,
-            editor=args.editor,
-            info=args.info,
-        )
-    except ImportError:
-        print('ERROR: Could not find module in '
-              'current environment: "{0}"'.format(args.module),
-              file=sys.stderr)
-        sys.exit(1)
+    if args.complete:
+        complete(args.module)
+    else:
+        try:
+            ped(
+                module=args.module,
+                editor=args.editor,
+                info=args.info,
+            )
+        except ImportError:
+            print('ERROR: Could not find module in '
+                  'current environment: "{0}"'.format(args.module),
+                  file=sys.stderr)
+            sys.exit(1)
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -41,6 +44,7 @@ def parse_args():
     parser.add_argument('-v', '--version', action='version', version=__version__)
     parser.add_argument('-i', '--info', action='store_true',
         help='output name, file path, and line number (if applicable) of module')
+    parser.add_argument('--complete', action='store_true', help=argparse.SUPPRESS)
     return parser.parse_args()
 
 def ped(module, editor=None, info=False):
@@ -54,6 +58,14 @@ def ped(module, editor=None, info=False):
         print('Editing {0}...'.format(module_name))
         edit_file(fpath, lineno=lineno, editor=editor)
         print('...Done.')
+
+def complete(ipath):
+    """Print possible module completions to stdout.
+
+    :param str ipath: Partial import path to a module, function, or class.
+    """
+    for name in get_names_by_prefix(ipath):
+        print(name)
 
 def get_info(ipath):
     """Return module name, file path, and line number.

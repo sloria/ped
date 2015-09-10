@@ -37,7 +37,7 @@ setup(
     author_email='sloria1@gmail.com',
     url='https://github.com/sloria/ped',
     install_requires=[],
-    license=read("LICENSE"),
+    license=read('LICENSE'),
     zip_safe=False,
     classifiers=[
         'Intended Audience :: Developers',
@@ -56,5 +56,11 @@ setup(
         'console_scripts': [
             "ped = ped:main"
         ]
-    }
+    },
+    package_data={
+        'ped': [
+            'ped_bash_completion.sh',
+            'ped_zsh_completion.zsh',
+        ]
+    },
 )
