@@ -40,7 +40,7 @@ Get it now
 Changing the default editor
 ***************************
 
-``ped`` will try to find your favorite text editor. If you want to override the editor ``ped`` uses, set the ``PED_EDITOR`` environment variable.
+``ped`` will try to use your favorite text editor. If you want to override the editor ``ped`` uses, set the ``PED_EDITOR`` environment variable.
 
 .. code-block:: bash
 
@@ -48,18 +48,34 @@ Changing the default editor
     # Use Sublime Text with ped
     export PED_EDITOR=subl
 
+Tab-completion
+**************
+
+The ped package contains tab-completion scripts for bash and zsh. Place these files in your system's completion directories. The ``ped.install_completion`` module can be run as a script to copy the files.
+
+- `bash completion <https://github.com/sloria/ped/blob/master/ped/ped_bash_completion.sh>`_
+- `zsh completion <https://github.com/sloria/ped/blob/master/ped/ped_zsh_completion.zsh>`_
+
+Bash completion
+---------------
+
+To install bash completion, run::
+
+    # The path given here will depend on your OS
+    $ python -m ped.install_completion --bash /usr/local/etc/bash_completion.d
+
+Zsh completion
+---------------
+
+To install zsh completion, run::
+
+    # The path given here will depend on your OS
+    $ python -m ped.install_completion --zsh /usr/local/share/zsh/site-functions
 
 Editor integrations
 *******************
 
 - `vim-ped <https://github.com/sloria/vim-ped>`_
-
-Tab completion
-**************
-
-To install tab completion for ped commands in bash, run::
-
-    sudo python -m ped.bashcomplete /etc/bash_completion.d/
 
 Kudos
 *****
@@ -69,6 +85,11 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 
 Changelog
 *********
+
+1.5.0
+-----
+
+- Support tab-completion in bash and zsh.
 
 1.4.0
 -----

@@ -56,12 +56,19 @@ from email.mime.message import MIMEMessage
 
 def assert_in_output(s, res, message=None):
     """Assert that a string is in either stdout or std err.
-    Included because banners are sometimes outputted to stderr.
     """
     assert any([
         s in res.stdout,
         s in res.stderr
     ]), message or '{0} not in output'.format(s)
+
+def assert_not_in_output(s, res, message=None):
+    """Assert that a string is neither stdout or std err.
+    """
+    assert all([
+        s not in res.stdout,
+        s not in res.stderr
+    ]), message or '{0} in output'.format(s)
 
 class TestAcceptance:
 
@@ -98,3 +105,31 @@ class TestAcceptance:
         assert res.returncode == 1
         expected = 'ERROR: Could not find module in current environment: "notfound"\n'
         assert res.stderr == expected
+
+    def test_complete(self, env):
+        assert 'email' in env.run('ped', 'email', '--complete').stdout
+        assert 'email' in env.run('ped', 'ema', '--complete').stdout
+
+        res = env.run('ped', 'e', '--complete')
+        assert 'email' in res.stdout
+        assert 'errno' in res.stdout
+
+    def test_complete_not_in_help(self, env):
+        res = env.run('ped', '--help')
+        assert_not_in_output('--complete', res)
+
+    def test_install_zsh_completion(self, env):
+        res = env.run('python', '-m', 'ped.install_completion', '--zsh', '.')
+        assert '_ped' in res.files_created
+        res.files_created['_ped'].mustcontain('#compdef ped')
+
+    def test_install_bash_completion(self, env):
+        res = env.run('python', '-m', 'ped.install_completion', '--bash', '.')
+        assert 'ped_bash_completion.sh' in res.files_created
+        res.files_created['ped_bash_completion.sh'].mustcontain('_complete_ped()')
+
+    def test_install_zsh_and_bash_completion(self, env):
+        res = env.run(
+            'python', '-m', 'ped.install_completion', '--bash', '.', '--zsh', '.')
+        assert 'ped_bash_completion.sh' in res.files_created
+        assert '_ped' in res.files_created

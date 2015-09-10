@@ -15,7 +15,7 @@ import sys
 
 from .guess_module import guess_module, get_names_by_prefix
 
-__version__ = '1.4.0'
+__version__ = '1.5.0'
 
 def main():
     args = parse_args()
@@ -61,7 +61,7 @@ def ped(module, editor=None, info=False):
 
 def complete(ipath):
     """Print possible module completions to stdout.
-    
+
     :param str ipath: Partial import path to a module, function, or class.
     """
     for name in get_names_by_prefix(ipath):
