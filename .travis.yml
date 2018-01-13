@@ -1,17 +1,27 @@
-# Config file for automatic testing at travis-ci.org
-
 language: python
-
-# Faster, containerized builds
 sudo: false
-
 python:
-  - "3.6"
-  - "3.5"
-  - "2.7"
-
+- '3.6'
+- '3.5'
+- '2.7'
 install:
-  - pip install -U .
-  - pip install -r dev-requirements.txt
-
+- pip install -U .
+- pip install -r dev-requirements.txt
 script: invoke test
+jobs:
+  include:
+  - stage: PyPI Release
+    if: tag IS present
+    python: '3.6'
+    env: []
+    install: true
+    script: echo "Releasing to PyPI..."
+    after_success: true
+    deploy:
+      provider: pypi
+      user: sloria
+      on:
+        tags: true
+      distributions: sdist bdist_wheel
+      password:
+        secure: rRud3GJtLM7tAm+k0OYWDxEy4IcW6XtPW5i/LqV+syPGaFkzPy33jhR4xqZUYmsCTqptk81Cz/q6mEY144rnty9SQ015Kwld0VzX8Vs+58LAUIMA1l1lr6bKK3YxpUoYgH9cJ6WlmmS9BoRn6/JcD+QIAYNg+xX3SbEMWURhkM64gI/R+SMDNMYin1ZqH2roGOo3/tznkDEFXMSkdAo4zTFWKHYRkFH8rEVaYYr4eMJCFvjq6yPO14Zp0X5x1VjuLVIKnJ9nzO6QddbCFaSwYNYMvqbFiCoOQJIroLR4g20Fj1sHR3TQYrWIeD45r4CM99syUzpiC6yOYjrlTClpWef/ePJZPbfXIqcRS52rDMeJ0nZCYM90uRNQDGwvvsaJfh/0W2uL+8Cnm7AevroD5Cmelua9CQ/2Uzcy7E/yi5AY6uZ7sHWoGfMZ3S1DafGtap2jdlCCzRh+erObm8pT6nlK7wjDsFtSLRAGJSA8MmwfeVkOgKOXD8RyXHB6O0UvaoZeKlkLmaRzzergAwaI227VMM2qWej8jOXgHjE33/0lJbVmdywumD2B0eQy3tBStRfYB9w73PVrq8L6YWI7XhhK/kFYlcD0yvwf9SDnt9PBJ6tBoi/kzy5LZqpK4vkhNB+B/CqBkFWy3gCHz8KVzQJmC5yzK9PzVNCOHVRSiYU=
