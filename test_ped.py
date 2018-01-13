@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 import argparse
+import email
+import email.mime
+from email.mime.message import MIMEMessage
+
 import pytest
-from scripttest import TestFileEnvironment
+from scripttest import TestFileEnvironment as FileEnvironment
 
 import ped
 from ped.guess_module import guess_module
+
 
 def test_ped_edits_file(mocker):
     mocker.patch('ped.edit_file')
@@ -50,9 +55,6 @@ def test_get_info():
 
 # Acceptance tests
 
-import email
-import email.mime
-from email.mime.message import MIMEMessage
 
 def assert_in_output(s, res, message=None):
     """Assert that a string is in either stdout or std err.
@@ -74,7 +76,7 @@ class TestAcceptance:
 
     @pytest.fixture
     def env(self):
-        return TestFileEnvironment()
+        return FileEnvironment()
 
     def test_cli_version(self, env):
         res = env.run('ped', '-v', expect_error=True)
