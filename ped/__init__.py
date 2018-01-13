@@ -131,7 +131,7 @@ def find_file(obj):
             except TypeError:
                 # Can happen for builtins
                 pass
-    except:
+    except Exception:
         pass
     return fname
 
@@ -154,7 +154,7 @@ def find_source_lines(obj):
                 lineno = inspect.getsourcelines(obj.__class__)[1]
             else:
                 lineno = None
-    except:
+    except Exception:
         return None
 
     return lineno
@@ -166,7 +166,7 @@ def safe_hasattr(obj, attr):
     try:
         getattr(obj, attr)
         return True
-    except:
+    except Exception:
         return False
 
 # Adapted from click._termui_impl
@@ -181,6 +181,7 @@ def get_editor():
         if os.system('which %s &> /dev/null' % editor) == 0:
             return editor
     return 'vi'
+
 
 # Editors that support the +lineno option
 SUPPORTS_LINENO = set(['vim', 'gvim', 'vi', 'nvim', 'mvim', 'emacs', 'jed', 'nano'])

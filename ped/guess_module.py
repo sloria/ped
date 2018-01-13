@@ -116,7 +116,7 @@ def module_list(path):
 def try_import(mod, only_modules=False):
     try:
         m = __import__(mod)
-    except:
+    except Exception:
         return []
     mods = mod.split('.')
     for module in mods[1:]:
