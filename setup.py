@@ -37,7 +37,7 @@ setup(
     author_email='sloria1@gmail.com',
     url='https://github.com/sloria/ped',
     install_requires=[],
-    license=read('LICENSE'),
+    license='MIT',
     zip_safe=False,
     keywords=('commandline', 'cli', 'open', 'editor', 'editing'),
     classifiers=[
