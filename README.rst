@@ -86,6 +86,12 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
+1.5.1
+-----
+
+- Minor code cleanups.
+- Test against Python 2.7, 3.5, and 3.6. Support for older versions is dropped.
+
 1.5.0
 -----
 
