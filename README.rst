@@ -2,13 +2,17 @@
 ped
 ===
 
-.. image:: https://img.shields.io/pypi/v/ped.svg
-    :target: https://pypi.python.org/pypi/ped
-    :alt: Latest version
+.. image:: https://badgen.net/pypi/v/ped
+  :alt: pypi badge
+  :target: https://badge.fury.io/py/ped
 
-.. image:: https://img.shields.io/travis/sloria/ped.svg
-    :target: https://travis-ci.org/sloria/ped
-    :alt: Travis-CI
+.. image:: https://badgen.net/travis/sloria/ped/master
+  :alt: travis-ci status
+  :target: https://travis-ci.org/sloria/ped
+
+.. image:: https://badgen.net/badge/code%20style/black/000
+   :target: https://github.com/ambv/black
+   :alt: Code style: Black
 
 Quickly open Python modules in your text editor.
 
@@ -85,6 +89,13 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 
 Changelog
 *********
+
+1.6.0 (unreleased)
+------------------
+
+- Test against Python 3.7.
+
+Note: This is the last version to support Python 2.
 
 1.5.1
 -----

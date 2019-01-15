@@ -56,10 +56,10 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
-README.html
 
 # PyBuilder
 target/
 
 .konchrc
 test-output
+.mypy_cache
