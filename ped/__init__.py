@@ -15,7 +15,7 @@ import sys
 
 from .guess_module import guess_module, get_names_by_prefix
 
-__version__ = "1.5.1.post0"
+__version__ = "1.6.0"
 
 
 def main():

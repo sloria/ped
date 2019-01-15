@@ -90,7 +90,7 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
-1.6.0 (unreleased)
+1.6.0 (2019-01-14)
 ------------------
 
 - Test against Python 3.7.
