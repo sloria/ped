@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Script to install bash and zsh completion for ped."""
 from __future__ import print_function
 

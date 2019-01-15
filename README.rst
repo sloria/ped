@@ -90,6 +90,11 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
+2.0.0 (unreleased)
+------------------
+
+- Drop support for Python 2.7 and 3.5. Only Python>=3.6 is supported.
+
 1.6.0 (2019-01-14)
 ------------------
 

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Helpers for finding possible module matches, given a substring.
 
 Much of this code is adapted from IPython.core.completerlib
@@ -11,16 +10,9 @@ import re
 import sys
 import time
 import zipimport
+from importlib.machinery import all_suffixes
 
-try:
-    # Python >= 3.3
-    from importlib.machinery import all_suffixes
-
-    _suffixes = all_suffixes()
-except ImportError:
-    from imp import get_suffixes
-
-    _suffixes = [s[0] for s in get_suffixes()]
+_suffixes = all_suffixes()
 
 # Regular expression for the python import statement
 import_re = re.compile(

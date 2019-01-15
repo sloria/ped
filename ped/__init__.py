@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """Open Python modules in your text editor.
 
 Example: ped django.core.urlresolvers
@@ -56,12 +55,12 @@ def parse_args():
 def ped(module, editor=None, info=False):
     module_name, fpath, lineno = get_info(module)
     if info:
-        out = "{} {}".format(module_name, fpath)
+        out = f"{module_name} {fpath}"
         if lineno is not None:
-            out += " {:d}".format(lineno)
+            out += f" {lineno:d}"
         print(out)
     else:
-        print("Editing {}...".format(module_name))
+        print(f"Editing {module_name}...")
         edit_file(fpath, lineno=lineno, editor=editor)
         print("...Done.")
 
@@ -90,7 +89,7 @@ def get_info(ipath):
             module_name = guessed[0]
             obj = import_object(module_name)
         else:
-            raise ImportError('Cannot find any module that matches "{}"'.format(ipath))
+            raise ImportError(f'Cannot find any module that matches "{ipath}"')
     fpath = find_file(obj)
     lineno = find_source_lines(obj)
     return module_name, fpath, lineno
@@ -107,9 +106,7 @@ def import_object(ipath):
         try:
             return getattr(mod, symbol_name)
         except AttributeError:
-            raise ImportError(
-                'Cannot import "{}" from "{}"'.format(symbol_name, module_name)
-            )
+            raise ImportError(f'Cannot import "{symbol_name}" from "{module_name}"')
         raise err
 
 
@@ -221,7 +218,7 @@ def edit_file(filename, lineno=None, editor=None):
             print("ERROR: Editing failed!", file=sys.stderr)
             sys.exit(1)
     except OSError as err:
-        print("ERROR: Editing failed: {}".format(err), file=sys.stderr)
+        print(f"ERROR: Editing failed: {err}", file=sys.stderr)
         sys.exit(1)
 
 
