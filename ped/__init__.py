@@ -15,7 +15,8 @@ import sys
 
 from .guess_module import guess_module, get_names_by_prefix
 
-__version__ = '1.5.1.post0'
+__version__ = "1.5.1.post0"
+
 
 def main():
     args = parse_args()
@@ -23,41 +24,47 @@ def main():
         complete(args.module)
     else:
         try:
-            ped(
-                module=args.module,
-                editor=args.editor,
-                info=args.info,
-            )
+            ped(module=args.module, editor=args.editor, info=args.info)
         except ImportError:
-            print('ERROR: Could not find module in '
-                  'current environment: "{0}"'.format(args.module),
-                  file=sys.stderr)
+            print(
+                "ERROR: Could not find module in "
+                'current environment: "{}"'.format(args.module),
+                file=sys.stderr,
+            )
             sys.exit(1)
+
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description=__doc__,
-        formatter_class=argparse.RawTextHelpFormatter
+        description=__doc__, formatter_class=argparse.RawTextHelpFormatter
     )
-    parser.add_argument('module', help='import path to module, function, or class')
-    parser.add_argument('-e', '--editor', type=str, dest='editor', help='editor program')
-    parser.add_argument('-v', '--version', action='version', version=__version__)
-    parser.add_argument('-i', '--info', action='store_true',
-        help='output name, file path, and line number (if applicable) of module')
-    parser.add_argument('--complete', action='store_true', help=argparse.SUPPRESS)
+    parser.add_argument("module", help="import path to module, function, or class")
+    parser.add_argument(
+        "-e", "--editor", type=str, dest="editor", help="editor program"
+    )
+    parser.add_argument("-v", "--version", action="version", version=__version__)
+    parser.add_argument(
+        "-i",
+        "--info",
+        action="store_true",
+        help="output name, file path, and line number (if applicable) of module",
+    )
+    parser.add_argument("--complete", action="store_true", help=argparse.SUPPRESS)
     return parser.parse_args()
+
 
 def ped(module, editor=None, info=False):
     module_name, fpath, lineno = get_info(module)
     if info:
-        out = '{0} {1}'.format(module_name, fpath)
+        out = "{} {}".format(module_name, fpath)
         if lineno is not None:
-            out += ' {0:d}'.format(lineno)
+            out += " {:d}".format(lineno)
         print(out)
     else:
-        print('Editing {0}...'.format(module_name))
+        print("Editing {}...".format(module_name))
         edit_file(fpath, lineno=lineno, editor=editor)
-        print('...Done.')
+        print("...Done.")
+
 
 def complete(ipath):
     """Print possible module completions to stdout.
@@ -66,6 +73,7 @@ def complete(ipath):
     """
     for name in get_names_by_prefix(ipath):
         print(name)
+
 
 def get_info(ipath):
     """Return module name, file path, and line number.
@@ -82,7 +90,7 @@ def get_info(ipath):
             module_name = guessed[0]
             obj = import_object(module_name)
         else:
-            raise ImportError('Cannot find any module that matches "{0}"'.format(ipath))
+            raise ImportError('Cannot find any module that matches "{}"'.format(ipath))
     fpath = find_file(obj)
     lineno = find_source_lines(obj)
     return module_name, fpath, lineno
@@ -92,24 +100,26 @@ def import_object(ipath):
     try:
         return importlib.import_module(ipath)
     except ImportError as err:
-        if '.' not in ipath:
+        if "." not in ipath:
             raise err
-        module_name, symbol_name = ipath.rsplit('.', 1)
+        module_name, symbol_name = ipath.rsplit(".", 1)
         mod = importlib.import_module(module_name)
         try:
             return getattr(mod, symbol_name)
         except AttributeError:
             raise ImportError(
-                'Cannot import "{0}" from "{1}"'.format(symbol_name, module_name)
+                'Cannot import "{}" from "{}"'.format(symbol_name, module_name)
             )
         raise err
+
 
 # Adapted from IPython.core.oinspect.find_file
 def _get_wrapped(obj):
     """Get the original object if wrapped in one or more @decorators"""
-    while safe_hasattr(obj, '__wrapped__'):
+    while safe_hasattr(obj, "__wrapped__"):
         obj = obj.__wrapped__
     return obj
+
 
 def find_file(obj):
     """Find the absolute path to the file where an object was defined.
@@ -125,7 +135,7 @@ def find_file(obj):
     except TypeError:
         # For an instance, the file that matters is where its class was
         # declared.
-        if hasattr(obj, '__class__'):
+        if hasattr(obj, "__class__"):
             try:
                 fname = inspect.getabsfile(obj.__class__)
             except TypeError:
@@ -134,6 +144,7 @@ def find_file(obj):
     except Exception:
         pass
     return fname
+
 
 # Adapted from IPython.core.oinspect.find_source_lines
 def find_source_lines(obj):
@@ -150,7 +161,7 @@ def find_source_lines(obj):
             lineno = inspect.getsourcelines(obj)[1]
         except TypeError:
             # For instances, try the class object like getsource() does
-            if hasattr(obj, '__class__'):
+            if hasattr(obj, "__class__"):
                 lineno = inspect.getsourcelines(obj.__class__)[1]
             else:
                 lineno = None
@@ -158,6 +169,7 @@ def find_source_lines(obj):
         return None
 
     return lineno
+
 
 def safe_hasattr(obj, attr):
     """In recent versions of Python, hasattr() only catches AttributeError.
@@ -169,27 +181,29 @@ def safe_hasattr(obj, attr):
     except Exception:
         return False
 
+
 # Adapted from click._termui_impl
 def get_editor():
-    for key in ('PED_EDITOR', 'VISUAL', 'EDITOR'):
+    for key in ("PED_EDITOR", "VISUAL", "EDITOR"):
         ret = os.environ.get(key)
         if ret:
             return ret
-    if sys.platform.startswith('win'):
-        return 'notepad'
-    for editor in 'vim', 'nano':
-        if os.system('which %s &> /dev/null' % editor) == 0:
+    if sys.platform.startswith("win"):
+        return "notepad"
+    for editor in "vim", "nano":
+        if os.system("which %s &> /dev/null" % editor) == 0:
             return editor
-    return 'vi'
+    return "vi"
 
 
 # Editors that support the +lineno option
-SUPPORTS_LINENO = set(['vim', 'gvim', 'vi', 'nvim', 'mvim', 'emacs', 'jed', 'nano'])
+SUPPORTS_LINENO = {"vim", "gvim", "vi", "nvim", "mvim", "emacs", "jed", "nano"}
+
 
 def get_editor_command(filename, lineno=None, editor=None):
     editor = editor or get_editor()
     # Enclose in quotes if necessary and legal
-    if ' ' in editor and os.path.isfile(editor) and editor[0] != '"':
+    if " " in editor and os.path.isfile(editor) and editor[0] != '"':
         editor = '"%s"' % editor
     if lineno and shlex.split(editor)[0] in SUPPORTS_LINENO:
         command = '{editor} +{lineno:d} "{filename}"'.format(**locals())
@@ -197,18 +211,19 @@ def get_editor_command(filename, lineno=None, editor=None):
         command = '{editor} "{filename}"'.format(**locals())
     return command
 
+
 def edit_file(filename, lineno=None, editor=None):
     command = get_editor_command(filename, lineno=lineno, editor=editor)
     try:
         result = subprocess.Popen(command, shell=True)
         exit_code = result.wait()
         if exit_code != 0:
-            print('ERROR: Editing failed!', file=sys.stderr)
+            print("ERROR: Editing failed!", file=sys.stderr)
             sys.exit(1)
     except OSError as err:
-        print('ERROR: Editing failed: {0}'.format(err), file=sys.stderr)
+        print("ERROR: Editing failed: {}".format(err), file=sys.stderr)
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
