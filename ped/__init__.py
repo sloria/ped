@@ -13,6 +13,7 @@ import subprocess
 import sys
 
 from .guess_module import guess_module, get_names_by_prefix
+from .style import print_error, style, sprint, GREEN
 
 __version__ = "1.6.0"
 
@@ -25,10 +26,8 @@ def main():
         try:
             ped(module=args.module, editor=args.editor, info=args.info)
         except ImportError:
-            print(
-                "ERROR: Could not find module in "
-                'current environment: "{}"'.format(args.module),
-                file=sys.stderr,
+            print_error(
+                f'Could not find module in current environment: "{args.module}"'
             )
             sys.exit(1)
 
@@ -60,9 +59,9 @@ def ped(module, editor=None, info=False):
             out += f" {lineno:d}"
         print(out)
     else:
-        print(f"Editing {module_name}...")
+        print(f"Editing {style(module_name, bold=True)}...")
         edit_file(fpath, lineno=lineno, editor=editor)
-        print("...Done.")
+        sprint("Done!", fg=GREEN)
 
 
 def complete(ipath):
@@ -215,10 +214,10 @@ def edit_file(filename, lineno=None, editor=None):
         result = subprocess.Popen(command, shell=True)
         exit_code = result.wait()
         if exit_code != 0:
-            print("ERROR: Editing failed!", file=sys.stderr)
+            print_error("Editing failed!")
             sys.exit(1)
     except OSError as err:
-        print(f"ERROR: Editing failed: {err}", file=sys.stderr)
+        print_error(f"Editing failed: {err}")
         sys.exit(1)
 
 
