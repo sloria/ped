@@ -13,6 +13,7 @@ import subprocess
 import sys
 
 from .guess_module import guess_module, get_names_by_prefix
+from .pypath import patch_sys_path
 from .style import print_error, style, sprint, GREEN
 
 __version__ = "1.6.0"
@@ -23,6 +24,10 @@ def main():
     if args.complete:
         complete(args.module)
     else:
+        # Allow ped to be run in its own virtual environment
+        # by pre-pending sys.path with the current virtual
+        # environment's sys.path
+        patch_sys_path()
         try:
             ped(module=args.module, editor=args.editor, info=args.info)
         except ImportError:
