@@ -19,7 +19,7 @@ from .style import print_error, style, sprint, GREEN
 __version__ = "1.6.0"
 
 
-def main():
+def main() -> None:
     args = parse_args()
     if args.complete:
         complete(args.module)

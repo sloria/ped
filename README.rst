@@ -94,7 +94,7 @@ Changelog
 ------------------
 
 - Drop support for Python 2.7 and 3.5. Only Python>=3.6 is supported.
-- ``ped`` can be run its own virtual environment, separate from the
+- ``ped`` can be run its own virtual environment separate from the
   user's virtual environment. Therefore, ped can be installed with
   pipsi or pipx.
 
