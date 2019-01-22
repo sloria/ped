@@ -1,6 +1,6 @@
+from typing import Optional, IO, Any
 import os
 import sys
-import typing
 
 RED = 31
 GREEN = 32
@@ -9,11 +9,7 @@ RESET_ALL = 0
 
 
 def style(
-    text: str,
-    fg: typing.Optional[int] = None,
-    *,
-    bold: bool = False,
-    file: typing.IO = sys.stdout,
+    text: str, fg: Optional[int] = None, *, bold: bool = False, file: IO = sys.stdout
 ) -> str:
     use_color = not os.environ.get("NO_COLOR") and file.isatty()
     if use_color:
@@ -28,7 +24,7 @@ def style(
         return text
 
 
-def sprint(text: str, *args: typing.Any, **kwargs: typing.Any) -> None:
+def sprint(text: str, *args: Any, **kwargs: Any) -> None:
     file = kwargs.pop("file", sys.stdout)
     return print(style(text, file=file, *args, **kwargs), file=file)
 

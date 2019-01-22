@@ -3,6 +3,7 @@
 Much of this code is adapted from IPython.core.completerlib
 (see NOTICE for license information).
 """
+from typing import List, Generator
 import difflib
 import inspect
 import os
@@ -26,7 +27,7 @@ import_re = re.compile(
 TIMEOUT_GIVEUP = 20
 
 
-def guess_module(name, **kwargs):
+def guess_module(name: str, **kwargs) -> List:
     """Given a string, return a list of probably module paths.
 
     Example: ::
@@ -40,7 +41,7 @@ def guess_module(name, **kwargs):
     return difflib.get_close_matches(name, possible, **kwargs)
 
 
-def get_possible_modules(name):
+def get_possible_modules(name: str) -> List[str]:
     mod = name.split(".")
     if len(mod) < 2:
         return get_root_modules()
@@ -48,13 +49,13 @@ def get_possible_modules(name):
     return [".".join(mod[:-1] + [el]) for el in completion_list]
 
 
-def get_names_by_prefix(prefix):
+def get_names_by_prefix(prefix: str) -> Generator[str, None, None]:
     for name in get_possible_modules(prefix):
         if name.startswith(prefix):
             yield name
 
 
-def get_root_modules():
+def get_root_modules() -> List[str]:
     """Return a list containing the names of all the modules available in the
     folders of the pythonpath.
     """
@@ -74,7 +75,7 @@ def get_root_modules():
     return rootmodules
 
 
-def module_list(path):
+def module_list(path) -> List[str]:
     """
     Return the list containing the names of the modules available in the given
     folder.
@@ -90,7 +91,7 @@ def module_list(path):
         # Build a list of all files in the directory and all files
         # in its subdirectories. For performance reasons, do not
         # recurse more than one level into subdirectories.
-        files = []
+        files: List[str] = []
         for root, dirs, nondirs in os.walk(path, followlinks=True):
             subdir = root[len(path) + 1 :]
             if subdir:
@@ -101,7 +102,7 @@ def module_list(path):
 
     else:
         try:
-            files = list(zipimport.zipimporter(path)._files.keys())
+            files = list(zipimport.zipimporter(path)._files.keys())  # type: ignore
         except Exception:
             files = []
 
@@ -114,7 +115,7 @@ def module_list(path):
     return list(set(modules))
 
 
-def try_import(mod, only_modules=False):
+def try_import(mod: str, only_modules=False) -> List[str]:
     try:
         m = __import__(mod)
     except Exception:
@@ -134,13 +135,13 @@ def try_import(mod, only_modules=False):
     completions.extend(getattr(m, "__all__", []))
     if m_is_init:
         completions.extend(module_list(os.path.dirname(m.__file__)))
-    completions = set(completions)
+    completions_set = set(completions)
     if "__init__" in completions:
-        completions.remove("__init__")
-    return list(completions)
+        completions_set.remove("__init__")
+    return list(completions_set)
 
 
-def is_importable(module, attr, only_modules):
+def is_importable(module, attr, only_modules) -> bool:
     if only_modules:
         return inspect.ismodule(getattr(module, attr))
     else:

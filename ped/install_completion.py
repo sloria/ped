@@ -6,6 +6,8 @@ import os
 import shutil
 import sys
 
+from .style import print_error
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 BASH = os.path.join(HERE, "ped_bash_completion.sh")
 ZSH = os.path.join(HERE, "ped_zsh_completion.zsh")
@@ -13,7 +15,7 @@ ZSH = os.path.join(HERE, "ped_zsh_completion.zsh")
 
 def main(zsh=None, bash=None):
     if not (zsh or bash):
-        print("Must provide --bash and/or --zsh", file=sys.stderr)
+        print_error("Must provide --bash and/or --zsh")
         sys.exit(1)
     if bash:
         install_bash_completion(bash)
@@ -23,15 +25,15 @@ def main(zsh=None, bash=None):
 
 
 def install_bash_completion(destination):
-    print("Copying", BASH, "to", destination)
+    print("Copying {BASH} to {destination}")
     shutil.copy(BASH, destination)
 
 
 def install_zsh_completion(destination):
     if not os.path.isdir(destination):
-        print("{} is not a directory", file=sys.stderr)
+        print_error(f"{destination} is not a directory")
         sys.exit(1)
-    print("Copying", ZSH, "to", destination)
+    print(f"Copying {ZSH} to {destination}")
     shutil.copy(ZSH, os.path.join(destination, "_ped"))
 
 

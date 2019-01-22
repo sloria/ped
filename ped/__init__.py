@@ -4,6 +4,8 @@
 Example: ped django.core.urlresolvers
 """
 from __future__ import print_function
+from types import ModuleType
+from typing import Optional, Tuple, Any
 import argparse
 import importlib
 import inspect
@@ -37,7 +39,7 @@ def main() -> None:
             sys.exit(1)
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawTextHelpFormatter
     )
@@ -56,7 +58,7 @@ def parse_args():
     return parser.parse_args()
 
 
-def ped(module, editor=None, info=False):
+def ped(module: str, editor: Optional[str] = None, info: bool = False) -> None:
     module_name, fpath, lineno = get_info(module)
     if info:
         out = f"{module_name} {fpath}"
@@ -69,7 +71,7 @@ def ped(module, editor=None, info=False):
         sprint("Done!", fg=GREEN)
 
 
-def complete(ipath):
+def complete(ipath: str) -> None:
     """Print possible module completions to stdout.
 
     :param str ipath: Partial import path to a module, function, or class.
@@ -78,7 +80,7 @@ def complete(ipath):
         print(name)
 
 
-def get_info(ipath):
+def get_info(ipath: str) -> Tuple[str, str, Optional[int]]:
     """Return module name, file path, and line number.
 
     :param str ipath: Import path to module, function, or class. May be a partial name,
@@ -99,7 +101,7 @@ def get_info(ipath):
     return module_name, fpath, lineno
 
 
-def import_object(ipath):
+def import_object(ipath: str) -> ModuleType:
     try:
         return importlib.import_module(ipath)
     except ImportError as err:
@@ -115,14 +117,14 @@ def import_object(ipath):
 
 
 # Adapted from IPython.core.oinspect.find_file
-def _get_wrapped(obj):
+def _get_wrapped(obj: Any) -> Any:
     """Get the original object if wrapped in one or more @decorators"""
     while safe_hasattr(obj, "__wrapped__"):
         obj = obj.__wrapped__
     return obj
 
 
-def find_file(obj):
+def find_file(obj: Any) -> str:
     """Find the absolute path to the file where an object was defined.
 
     This is essentially a robust wrapper around `inspect.getabsfile`.
@@ -130,7 +132,7 @@ def find_file(obj):
     # get source if obj was decorated with @decorator
     obj = _get_wrapped(obj)
 
-    fname = None
+    fname: str
     try:
         fname = inspect.getabsfile(obj)
     except TypeError:
@@ -148,7 +150,7 @@ def find_file(obj):
 
 
 # Adapted from IPython.core.oinspect.find_source_lines
-def find_source_lines(obj):
+def find_source_lines(obj: Any) -> Optional[int]:
     """Find the line number in a file where an object was defined.
 
     This is essentially a robust wrapper around `inspect.getsourcelines`.
@@ -157,6 +159,7 @@ def find_source_lines(obj):
     """
     obj = _get_wrapped(obj)
 
+    lineno: Optional[int]
     try:
         try:
             lineno = inspect.getsourcelines(obj)[1]
@@ -172,7 +175,7 @@ def find_source_lines(obj):
     return lineno
 
 
-def safe_hasattr(obj, attr):
+def safe_hasattr(obj: Any, attr: str) -> bool:
     """In recent versions of Python, hasattr() only catches AttributeError.
     This catches all errors.
     """
@@ -184,7 +187,7 @@ def safe_hasattr(obj, attr):
 
 
 # Adapted from click._termui_impl
-def get_editor():
+def get_editor() -> str:
     for key in ("PED_EDITOR", "VISUAL", "EDITOR"):
         ret = os.environ.get(key)
         if ret:
@@ -201,7 +204,9 @@ def get_editor():
 SUPPORTS_LINENO = {"vim", "gvim", "vi", "nvim", "mvim", "emacs", "jed", "nano"}
 
 
-def get_editor_command(filename, lineno=None, editor=None):
+def get_editor_command(
+    filename: str, lineno: Optional[int] = None, editor: Optional[str] = None
+) -> str:
     editor = editor or get_editor()
     # Enclose in quotes if necessary and legal
     if " " in editor and os.path.isfile(editor) and editor[0] != '"':
@@ -213,7 +218,9 @@ def get_editor_command(filename, lineno=None, editor=None):
     return command
 
 
-def edit_file(filename, lineno=None, editor=None):
+def edit_file(
+    filename: str, lineno: Optional[int] = None, editor: Optional[str] = None
+) -> None:
     command = get_editor_command(filename, lineno=lineno, editor=editor)
     try:
         result = subprocess.Popen(command, shell=True)
