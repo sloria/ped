@@ -26,7 +26,7 @@ def main() -> None:
     shell = Path(shell_path).stem
     if shell not in SHELL_MAP:
         print_error(
-            f"${shell_path} not supported. Only bash and zsh are currently supported."
+            f'"{shell_path}" not supported. Only bash and zsh are currently supported.'
         )
         sys.exit(1)
     completion_path = SHELL_MAP[shell]
