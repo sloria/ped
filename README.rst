@@ -55,10 +55,8 @@ Changing the default editor
 Tab-completion
 **************
 
-The ped package contains tab-completion scripts for bash and zsh. Place these files in your system's completion directories. The ``ped.install_completion`` module can be run as a script to copy the files.
-
-- `bash completion <https://github.com/sloria/ped/blob/master/ped/ped_bash_completion.sh>`_
-- `zsh completion <https://github.com/sloria/ped/blob/master/ped/ped_zsh_completion.zsh>`_
+The ped package contains tab-completion scripts for bash and zsh. Place these files in your system's completion directories. The ``ped.install_completion`` module can be run as a script to output the files to a given location. It determines the correct completion file from
+the ``$SHELL`` environment variable.
 
 Bash completion
 ---------------
@@ -66,7 +64,7 @@ Bash completion
 To install bash completion, run::
 
     # The path given here will depend on your OS
-    $ python -m ped.install_completion --bash /usr/local/etc/bash_completion.d
+    $ python -m ped.install_completion > /usr/local/etc/bash_completion.d
 
 Zsh completion
 ---------------
@@ -74,7 +72,7 @@ Zsh completion
 To install zsh completion, run::
 
     # The path given here will depend on your OS
-    $ python -m ped.install_completion --zsh /usr/local/share/zsh/site-functions
+    $ python -m ped.install_completion > /usr/local/share/zsh/site-functions
 
 Editor integrations
 *******************
@@ -97,6 +95,8 @@ Changelog
 - ``ped`` can be run its own virtual environment separate from the
   user's virtual environment. Therefore, ped can be installed with
   pipsi or pipx.
+- ``install_completion`` script writes to ``stdout`` and detemrmines
+  script from ``$SHELL``.
 
 1.6.0 (2019-01-14)
 ------------------

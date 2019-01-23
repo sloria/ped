@@ -125,18 +125,24 @@ class TestAcceptance:
         assert_not_in_output("--complete", res)
 
     def test_install_zsh_completion(self, env):
-        res = env.run("python", "-m", "ped.install_completion", "--zsh", ".")
-        assert "_ped" in res.files_created
-        res.files_created["_ped"].mustcontain("#compdef ped")
+        env.environ["SHELL"] = "/usr/bin/zsh"
+        res = env.run("python", "-m", "ped.install_completion")
+        assert "#compdef ped" in res.stdout
 
     def test_install_bash_completion(self, env):
-        res = env.run("python", "-m", "ped.install_completion", "--bash", ".")
-        assert "ped_bash_completion.sh" in res.files_created
-        res.files_created["ped_bash_completion.sh"].mustcontain("_complete_ped()")
+        env.environ["SHELL"] = "/usr/bin/bash"
+        res = env.run("python", "-m", "ped.install_completion")
+        assert "_complete_ped" in res.stdout
 
-    def test_install_zsh_and_bash_completion(self, env):
-        res = env.run(
-            "python", "-m", "ped.install_completion", "--bash", ".", "--zsh", "."
-        )
-        assert "ped_bash_completion.sh" in res.files_created
-        assert "_ped" in res.files_created
+    def test_install_completion_invalid_shell(self, env):
+        env.environ["SHELL"] = "/usr/bin/badsh"
+        res = env.run("python", "-m", "ped.install_completion", expect_error=True)
+        assert "ERROR" in res.stderr
+
+    def test_install_completion_shell_unset(self, env):
+        try:
+            del env.environ["SHELL"]
+        except KeyError:
+            pass
+        res = env.run("python", "-m", "ped.install_completion", expect_error=True)
+        assert "ERROR" in res.stderr

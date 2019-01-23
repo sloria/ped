@@ -1,4 +1,4 @@
-#  Completion for ped:
+#  Bash completion for ped:
 #
 #  ped [module name]
 #
