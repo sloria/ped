@@ -3,7 +3,6 @@
 
 Example: ped django.core.urlresolvers
 """
-from __future__ import print_function
 from types import ModuleType
 from typing import Optional, Tuple, Any
 import argparse
