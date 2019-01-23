@@ -17,7 +17,7 @@ from .guess_module import guess_module, get_names_by_prefix
 from .pypath import patch_sys_path
 from .style import print_error, style, sprint, GREEN
 
-__version__ = "1.6.0"
+__version__ = "2.0.0"
 
 
 def main() -> None:
