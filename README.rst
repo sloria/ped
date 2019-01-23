@@ -36,9 +36,19 @@ Quickly open Python modules in your text editor.
 
 Get it now
 **********
+
+From PyPI:
+
 ::
 
     $ pip install ped
+
+
+Or, run it with `pipx <https://github.com/cs01/pipx>`_:
+
+::
+
+    $ pipx ped --help
 
 
 Changing the default editor
