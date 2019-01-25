@@ -209,11 +209,11 @@ def get_editor_command(
     editor = editor or get_editor()
     # Enclose in quotes if necessary and legal
     if " " in editor and os.path.isfile(editor) and editor[0] != '"':
-        editor = '"%s"' % editor
+        editor = f'"{editor}"'
     if lineno and shlex.split(editor)[0] in SUPPORTS_LINENO:
-        command = '{editor} +{lineno:d} "{filename}"'.format(**locals())
+        command = f'{editor} +{lineno:d} "{filename}"'
     else:
-        command = '{editor} "{filename}"'.format(**locals())
+        command = f'{editor} "{filename}"'
     return command
 
 
