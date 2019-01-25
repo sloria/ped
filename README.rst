@@ -98,6 +98,13 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
+2.0.1 (unreleased)
+------------------
+
+Bug fixes:
+
+- Properly handle imports that don't correspond to a file.
+
 2.0.0 (2019-01-22)
 ------------------
 

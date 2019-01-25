@@ -96,6 +96,8 @@ def get_info(ipath: str) -> Tuple[str, str, Optional[int]]:
         else:
             raise ImportError(f'Cannot find any module that matches "{ipath}"')
     fpath = find_file(obj)
+    if not fpath:
+        raise ImportError(f'Cannot find any module that matches "{ipath}"')
     lineno = find_source_lines(obj)
     return module_name, fpath, lineno
 
@@ -123,7 +125,7 @@ def _get_wrapped(obj: Any) -> Any:
     return obj
 
 
-def find_file(obj: Any) -> str:
+def find_file(obj: Any) -> Optional[str]:
     """Find the absolute path to the file where an object was defined.
 
     This is essentially a robust wrapper around `inspect.getabsfile`.
@@ -131,7 +133,7 @@ def find_file(obj: Any) -> str:
     # get source if obj was decorated with @decorator
     obj = _get_wrapped(obj)
 
-    fname: str
+    fname = None
     try:
         fname = inspect.getabsfile(obj)
     except TypeError:
