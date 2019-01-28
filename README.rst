@@ -98,7 +98,7 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
-2.0.1 (unreleased)
+2.0.1 (2018-01-27)
 ------------------
 
 Bug fixes:
