@@ -4,7 +4,7 @@ ped
 
 .. image:: https://badgen.net/pypi/v/ped
   :alt: pypi badge
-  :target: https://badge.fury.io/py/ped
+  :target: https://pypi.org/project/ped/
 
 .. image:: https://badgen.net/travis/sloria/ped/master
   :alt: travis-ci status
