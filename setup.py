@@ -5,7 +5,7 @@ EXTRAS_REQUIRE = {
     "tests": ["pytest", "mock", "pytest-mock", "scripttest==1.3"],
     "lint": [
         "flake8==3.7.7",
-        "flake8-bugbear==18.8.0",
+        "flake8-bugbear==19.3.0",
         "mypy==0.670",
         "pre-commit==1.14.4",
     ],
