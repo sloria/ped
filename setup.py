@@ -6,7 +6,7 @@ EXTRAS_REQUIRE = {
     "lint": [
         "flake8==3.7.7",
         "flake8-bugbear==19.3.0",
-        "mypy==0.670",
+        "mypy==0.700",
         "pre-commit==1.15.1",
     ],
 }
