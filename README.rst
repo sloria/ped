@@ -44,11 +44,11 @@ From PyPI:
     $ pip install ped
 
 
-Or, run it with `pipx <https://github.com/cs01/pipx>`_:
+Or, run it with `pipx <https://github.com/pipxproject/pipx>`_:
 
 ::
 
-    $ pipx ped --help
+    $ pipx run ped --help
 
 
 Changing the default editor
