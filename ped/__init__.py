@@ -16,6 +16,7 @@ import sys
 from .guess_module import guess_module, get_names_by_prefix
 from .pypath import patch_sys_path
 from .style import print_error, style, sprint, GREEN
+from pathlib import Path
 
 __version__ = "2.0.1"
 
@@ -148,11 +149,11 @@ def find_file(obj: Any) -> Optional[str]:
     except Exception:
         pass
 
-    split_fname = fname.split('/')
-    file = split_fname[-1]
-    if file == '__init__.py':
+    # split_fname = fname.split('/')
+    fname_path = Path(fname)
+    if fname_path.name == '__init__.py':
         # open the directory instead of the __init__.py file.
-        fname = '/'.join(split_fname[:-1])
+        fname = str(fname_path.parent)
 
     return fname
 
