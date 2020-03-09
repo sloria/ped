@@ -147,6 +147,13 @@ def find_file(obj: Any) -> Optional[str]:
                 pass
     except Exception:
         pass
+
+    split_fname = fname.split('/')
+    file = split_fname[-1]
+    if file == '__init__.py':
+        # open the directory instead of the __init__.py file.
+        fname = '/'.join(split_fname[:-1])
+
     return fname
 
 
