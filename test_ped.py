@@ -8,7 +8,16 @@ from scripttest import TestFileEnvironment as FileEnvironment
 
 import ped
 from ped.guess_module import guess_module
+import importlib
+import os
 
+def test_dir_opening():
+    ped_obj = importlib.import_module('ped')
+    curr_os_environ_ped_od = os.environ["PED_OPEN_DIRECTORIES"]
+    os.environ["PED_OPEN_DIRECTORIES"] = "1"
+    ped_file = ped.find_file(ped_obj)
+    assert '__init__.py' not in ped_file
+    os.environ["PED_OPEN_DIRECTORIES"] = curr_os_environ_ped_od
 
 def test_ped_edits_file(mocker):
     mocker.patch("ped.edit_file")
