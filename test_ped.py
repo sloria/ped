@@ -10,14 +10,13 @@ import ped
 from ped.guess_module import guess_module
 import importlib
 import os
+from pathlib import Path
 
-def test_dir_opening():
-    ped_obj = importlib.import_module('ped')
-    curr_os_environ_ped_od = os.environ["PED_OPEN_DIRECTORIES"]
-    os.environ["PED_OPEN_DIRECTORIES"] = "1"
-    ped_dir = ped.find_file(ped_obj)
-    assert Path(ped_dir).is_dir() is True
-    os.environ["PED_OPEN_DIRECTORIES"] = curr_os_environ_ped_od
+def test_dir_opening(monkeypatch):
+    with monkeypatch.context() as m:
+        m.setenv('PED_OPEN_DIRECTORIES', '1')
+        ped_dir = ped.find_file(ped)
+        assert Path(ped_dir).is_dir() is True
 
 def test_ped_edits_file(mocker):
     mocker.patch("ped.edit_file")
