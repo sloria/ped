@@ -8,8 +8,6 @@ from scripttest import TestFileEnvironment as FileEnvironment
 
 import ped
 from ped.guess_module import guess_module
-import importlib
-import os
 from pathlib import Path
 
 

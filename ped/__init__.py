@@ -150,7 +150,7 @@ def find_file(obj: Any) -> Optional[str]:
         pass
 
     if os.environ.get("PED_OPEN_DIRECTORIES"):
-        fname_path = Path(fname)
+        fname_path = Path(str(fname))
         if fname_path.name == "__init__.py":
             # open the directory instead of the __init__.py file.
             fname = str(fname_path.parent)
