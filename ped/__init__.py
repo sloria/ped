@@ -149,9 +149,9 @@ def find_file(obj: Any) -> Optional[str]:
     except Exception:
         pass
 
-    if os.environ.get('PED_OPEN_DIRECTORIES'):        
+    if os.environ.get("PED_OPEN_DIRECTORIES"):
         fname_path = Path(fname)
-        if fname_path.name == '__init__.py':
+        if fname_path.name == "__init__.py":
             # open the directory instead of the __init__.py file.
             fname = str(fname_path.parent)
 
