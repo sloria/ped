@@ -16,7 +16,7 @@ def test_dir_opening():
     curr_os_environ_ped_od = os.environ["PED_OPEN_DIRECTORIES"]
     os.environ["PED_OPEN_DIRECTORIES"] = "1"
     ped_dir = ped.find_file(ped_obj)
-    assert '__init__.py' not in ped_file
+    assert Path(ped_dir).is_dir() is True
     os.environ["PED_OPEN_DIRECTORIES"] = curr_os_environ_ped_od
 
 def test_ped_edits_file(mocker):
