@@ -15,7 +15,7 @@ def test_dir_opening():
     ped_obj = importlib.import_module('ped')
     curr_os_environ_ped_od = os.environ["PED_OPEN_DIRECTORIES"]
     os.environ["PED_OPEN_DIRECTORIES"] = "1"
-    ped_file = ped.find_file(ped_obj)
+    ped_dir = ped.find_file(ped_obj)
     assert '__init__.py' not in ped_file
     os.environ["PED_OPEN_DIRECTORIES"] = curr_os_environ_ped_od
 
