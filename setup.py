@@ -3,12 +3,7 @@ from setuptools import setup
 
 EXTRAS_REQUIRE = {
     "tests": ["pytest", "mock", "pytest-mock", "scripttest==1.3"],
-    "lint": [
-        "flake8==3.7.9",
-        "flake8-bugbear==20.1.4",
-        "mypy==0.770",
-        "pre-commit==2.2.0",
-    ],
+    "lint": ["flake8==3.7.9", "flake8-bugbear==20.1.4", "mypy==0.770", "pre-commit"],
 }
 EXTRAS_REQUIRE["dev"] = EXTRAS_REQUIRE["tests"] + EXTRAS_REQUIRE["lint"] + ["tox"]
 PYTHON_REQUIRES = ">=3.6"
@@ -19,7 +14,7 @@ def find_version(fname):
     Raises RuntimeError if not found.
     """
     version = ""
-    with open(fname, "r") as fp:
+    with open(fname) as fp:
         reg = re.compile(r'__version__ = [\'"]([^\'"]*)[\'"]')
         for line in fp:
             m = reg.match(line)
@@ -59,6 +54,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: System :: Shells",
     ],
     entry_points={"console_scripts": ["ped = ped:main"]},
