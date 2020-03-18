@@ -16,6 +16,7 @@ import sys
 from .guess_module import guess_module, get_names_by_prefix
 from .pypath import patch_sys_path
 from .style import print_error, style, sprint, GREEN
+from pathlib import Path
 
 __version__ = "2.0.1"
 
@@ -147,6 +148,13 @@ def find_file(obj: Any) -> Optional[str]:
                 pass
     except Exception:
         pass
+
+    if fname and os.environ.get("PED_OPEN_DIRECTORIES"):
+        fname_path = Path(fname)
+        if fname_path.name == "__init__.py":
+            # open the directory instead of the __init__.py file.
+            fname = str(fname_path.parent)
+
     return fname
 
 

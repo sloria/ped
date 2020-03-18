@@ -8,6 +8,13 @@ from scripttest import TestFileEnvironment as FileEnvironment
 
 import ped
 from ped.guess_module import guess_module
+from pathlib import Path
+
+
+def test_dir_opening(monkeypatch):
+    monkeypatch.setenv("PED_OPEN_DIRECTORIES", "1")
+    ped_dir = ped.find_file(ped)
+    assert Path(ped_dir).is_dir() is True
 
 
 def test_ped_edits_file(mocker):
