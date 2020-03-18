@@ -112,7 +112,7 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
-2.1.0 (unreleased)
+2.1.0 (2019-03-18)
 ------------------
 
 - Set ``PED_OPEN_DIRECTORIES=1`` to open package directories instead of
