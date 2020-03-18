@@ -62,6 +62,20 @@ Changing the default editor
     # Use Sublime Text with ped
     export PED_EDITOR=subl
 
+
+Opening directories
+*******************
+
+By default, ``ped`` will open ``__init__.py`` files when a package name is passed.
+If you would rather open the package's directory, set the ``PED_OPEN_DIRECTORIES`` environment variable.
+
+.. code-block:: bash
+
+    # .zshrc or .bashrc
+    # Open package directories instead of __init__.py
+    export PED_OPEN_DIRECTORIES=1
+
+
 Tab-completion
 **************
 
@@ -97,6 +111,12 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 
 Changelog
 *********
+
+2.1.0 (unreleased)
+------------------
+
+- Set ``PED_OPEN_DIRECTORIES=1`` to open package directories instead of
+  opening ``__init__.py`` files. Thanks `Alex Nordin <https://github.com/anordin95>`.
 
 2.0.1 (2018-01-27)
 ------------------
