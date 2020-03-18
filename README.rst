@@ -116,7 +116,7 @@ Changelog
 ------------------
 
 - Set ``PED_OPEN_DIRECTORIES=1`` to open package directories instead of
-  opening ``__init__.py`` files. Thanks `Alex Nordin <https://github.com/anordin95>`.
+  opening ``__init__.py`` files. Thanks `Alex Nordin <https://github.com/anordin95>`_.
 
 2.0.1 (2018-01-27)
 ------------------
