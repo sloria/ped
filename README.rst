@@ -6,9 +6,9 @@ ped
   :alt: pypi badge
   :target: https://pypi.org/project/ped/
 
-.. image:: https://badgen.net/travis/sloria/ped/master
-  :alt: travis-ci status
-  :target: https://travis-ci.org/sloria/ped
+.. image:: https://dev.azure.com/sloria/sloria/_apis/build/status/sloria.ped?branchName=master
+  :alt: Build Status
+  :target: https://dev.azure.com/sloria/sloria/_build/latest?definitionId=18&branchName=master
 
 .. image:: https://badgen.net/badge/code%20style/black/000
    :target: https://github.com/ambv/black
