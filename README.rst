@@ -6,10 +6,6 @@ ped
   :alt: pypi badge
   :target: https://pypi.org/project/ped/
 
-.. image:: https://badgen.net/travis/sloria/ped/master
-  :alt: travis-ci status
-  :target: https://travis-ci.org/sloria/ped
-
 .. image:: https://badgen.net/badge/code%20style/black/000
    :target: https://github.com/ambv/black
    :alt: Code style: Black
