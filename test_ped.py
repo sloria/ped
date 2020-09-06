@@ -73,14 +73,12 @@ def test_get_info():
 
 
 def assert_in_output(s, res, message=None):
-    """Assert that a string is in either stdout or std err.
-    """
+    """Assert that a string is in either stdout or std err."""
     assert any([s in res.stdout, s in res.stderr]), message or f"{s} not in output"
 
 
 def assert_not_in_output(s, res, message=None):
-    """Assert that a string is neither stdout or std err.
-    """
+    """Assert that a string is neither stdout or std err."""
     assert all([s not in res.stdout, s not in res.stderr]), message or f"{s} in output"
 
 
