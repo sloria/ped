@@ -112,6 +112,12 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
+2.2.0 (unreleased)
+------------------
+
+- Test against Python 3.9.
+
+
 2.1.0 (2019-03-18)
 ------------------
 
