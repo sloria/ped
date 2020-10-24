@@ -118,7 +118,7 @@ Changelog
 - Test against Python 3.9.
 
 
-2.1.0 (2019-03-18)
+2.1.0 (2020-03-18)
 ------------------
 
 - Set ``PED_OPEN_DIRECTORIES=1`` to open package directories instead of
