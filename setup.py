@@ -3,7 +3,7 @@ from setuptools import setup
 
 EXTRAS_REQUIRE = {
     "tests": ["pytest", "mock", "pytest-mock", "scripttest==1.3"],
-    "lint": ["flake8==3.8.4", "flake8-bugbear==20.1.4", "mypy==0.790", "pre-commit"],
+    "lint": ["flake8==3.8.4", "flake8-bugbear==20.11.1", "mypy==0.790", "pre-commit"],
 }
 EXTRAS_REQUIRE["dev"] = EXTRAS_REQUIRE["tests"] + EXTRAS_REQUIRE["lint"] + ["tox"]
 PYTHON_REQUIRES = ">=3.6"
