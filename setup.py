@@ -2,7 +2,7 @@ import re
 from setuptools import setup
 
 EXTRAS_REQUIRE = {
-    "tests": ["pytest", "mock", "pytest-mock", "scripttest==1.3"],
+    "tests": ["pytest", "pytest-mock", "scripttest==1.3"],
     "lint": [
         "flake8==7.0.0",
         "flake8-bugbear==23.12.2",
