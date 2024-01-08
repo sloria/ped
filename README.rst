@@ -6,9 +6,9 @@ ped
   :alt: pypi badge
   :target: https://pypi.org/project/ped/
 
-.. image:: https://dev.azure.com/sloria/sloria/_apis/build/status/sloria.ped?branchName=master
-  :alt: Build Status
-  :target: https://dev.azure.com/sloria/sloria/_build/latest?definitionId=18&branchName=master
+.. image:: https://github.com/sloria/ped/actions/workflows/build-release.yml/badge.svg
+    :alt: build status
+    :target: https://github.com/sloria/ped/actions/workflows/build-release.yml
 
 .. image:: https://badgen.net/badge/code%20style/black/000
    :target: https://github.com/ambv/black
@@ -59,8 +59,8 @@ Changing the default editor
 .. code-block:: bash
 
     # .zshrc or .bashrc
-    # Use Sublime Text with ped
-    export PED_EDITOR=subl
+    # Use vim with ped
+    export PED_EDITOR=vim
 
 
 Opening directories
