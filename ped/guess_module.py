@@ -124,7 +124,7 @@ def try_import(mod: str, only_modules=False) -> List[str]:
     for module in mods[1:]:
         m = getattr(m, module)
 
-    m_is_init = hasattr(m, "__file__") and "__init__" in m.__file__
+    m_is_init = hasattr(m, "__file__") and "__init__" in str(m.__file__)
 
     completions = []
     if (not hasattr(m, "__file__")) or (not only_modules) or m_is_init:
@@ -133,7 +133,7 @@ def try_import(mod: str, only_modules=False) -> List[str]:
         )
 
     completions.extend(getattr(m, "__all__", []))
-    if m_is_init:
+    if m_is_init and m.__file__:
         completions.extend(module_list(os.path.dirname(m.__file__)))
     completions_set = set(completions)
     if "__init__" in completions:
