@@ -26,7 +26,7 @@ def style(
 
 def sprint(text: str, *args: Any, **kwargs: Any) -> None:
     file = kwargs.pop("file", sys.stdout)
-    return print(style(text, file=file, *args, **kwargs), file=file)
+    return print(style(text, *args, **kwargs, file=file), file=file)
 
 
 def print_error(text: str) -> None:
