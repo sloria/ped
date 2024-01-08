@@ -115,7 +115,7 @@ Changelog
 2.2.0 (unreleased)
 ------------------
 
-- Test against Python 3.9.
+- Test against Python 3.8-3.12. Older versions of Python are no longer supported.
 
 
 2.1.0 (2020-03-18)

@@ -6,7 +6,7 @@ EXTRAS_REQUIRE = {
     "lint": ["flake8==3.9.2", "flake8-bugbear==21.4.3", "mypy==0.910", "pre-commit"],
 }
 EXTRAS_REQUIRE["dev"] = EXTRAS_REQUIRE["tests"] + EXTRAS_REQUIRE["lint"] + ["tox"]
-PYTHON_REQUIRES = ">=3.6"
+PYTHON_REQUIRES = ">=3.8"
 
 
 def find_version(fname):
@@ -46,16 +46,17 @@ setup(
     python_requires=PYTHON_REQUIRES,
     license="MIT",
     zip_safe=False,
-    keywords=("commandline", "cli", "open", "editor", "editing"),
+    keywords=["commandline", "cli", "open", "editor", "editing"],
     classifiers=[
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Topic :: System :: Shells",
     ],
     entry_points={"console_scripts": ["ped = ped:main"]},
