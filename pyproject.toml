@@ -1,6 +1,6 @@
 [project]
 name = "ped"
-version = "2.1.0"
+version = "3.0.0"
 description = "Quickly open Python modules in your text editor."
 readme = "README.rst"
 license = { file = "LICENSE" }

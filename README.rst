@@ -112,7 +112,7 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
-3.0.0 (unreleased)
+3.0.0 (2024-01-18)
 ------------------
 
 - Publish type information.
