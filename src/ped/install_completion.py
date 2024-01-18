@@ -1,7 +1,7 @@
 """Script to install bash and zsh completion for ped."""
-from pathlib import Path
-import sys
 import os
+import sys
+from pathlib import Path
 
 from .style import print_error, style
 

@@ -2,13 +2,13 @@ import argparse
 import email
 import email.mime
 from email.mime.message import MIMEMessage
+from pathlib import Path
 
 import pytest
 from scripttest import TestFileEnvironment as FileEnvironment
 
 import ped
 from ped.guess_module import guess_module
-from pathlib import Path
 
 
 def test_dir_opening(monkeypatch):

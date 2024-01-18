@@ -1,7 +1,7 @@
-from typing import List
-import sys
 import shutil
 import subprocess
+import sys
+from typing import List
 
 
 def patch_sys_path() -> None:
