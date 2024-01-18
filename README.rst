@@ -115,6 +115,7 @@ Changelog
 2.2.0 (unreleased)
 ------------------
 
+- Publish type information.
 - Test against Python 3.8-3.12. Older versions of Python are no longer supported.
 
 
