@@ -64,3 +64,6 @@ target/
 .konchrc
 test-output
 .mypy_cache
+
+# ruff
+.ruff_cache
