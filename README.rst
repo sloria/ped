@@ -112,12 +112,13 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
-2.2.0 (unreleased)
+3.0.0 (unreleased)
 ------------------
 
 - Publish type information.
 - Test against Python 3.8-3.12. Older versions of Python are no longer supported.
-
+- *Backwards-incompatible*: Remove ``ped.__version__`` attribute.
+  Use ``importlib.metadata.version("ped")`` instead.
 
 2.1.0 (2020-03-18)
 ------------------

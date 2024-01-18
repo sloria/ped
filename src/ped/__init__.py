@@ -5,6 +5,7 @@ Example: ped django.core.urlresolvers
 """
 import argparse
 import importlib
+import importlib.metadata
 import inspect
 import os
 import shlex
@@ -17,8 +18,6 @@ from typing import Any, Optional, Tuple
 from .guess_module import get_names_by_prefix, guess_module
 from .pypath import patch_sys_path
 from .style import GREEN, print_error, sprint, style
-
-__version__ = "2.1.0"
 
 
 def main() -> None:
@@ -47,7 +46,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-e", "--editor", type=str, dest="editor", help="editor program"
     )
-    parser.add_argument("-v", "--version", action="version", version=__version__)
+    parser.add_argument(
+        "-v", "--version", action="version", version=importlib.metadata.version("ped")
+    )
     parser.add_argument(
         "-i",
         "--info",
