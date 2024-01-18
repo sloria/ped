@@ -1,14 +1,15 @@
 import argparse
 import email
 import email.mime
+import importlib.metadata
 from email.mime.message import MIMEMessage
+from pathlib import Path
 
 import pytest
 from scripttest import TestFileEnvironment as FileEnvironment
 
 import ped
 from ped.guess_module import guess_module
-from pathlib import Path
 
 
 def test_dir_opening(monkeypatch):
@@ -89,7 +90,8 @@ class TestAcceptance:
 
     def test_cli_version(self, env):
         res = env.run("ped", "-v", expect_error=True)
-        assert_in_output(ped.__version__ + "\n", res)
+        ped_version = importlib.metadata.version("ped")
+        assert_in_output(ped_version + "\n", res)
 
     def test_info(self, env):
         res = env.run("ped", "-i", "email")

@@ -3,7 +3,6 @@
 Much of this code is adapted from IPython.core.completerlib
 (see NOTICE for license information).
 """
-from typing import List, Generator
 import difflib
 import inspect
 import os
@@ -12,6 +11,7 @@ import sys
 import time
 import zipimport
 from importlib.machinery import all_suffixes
+from typing import Generator, List
 
 _suffixes = all_suffixes()
 

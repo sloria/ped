@@ -1,6 +1,6 @@
-from typing import Optional, IO, Any
 import os
 import sys
+from typing import IO, Any, Optional
 
 RED = 31
 GREEN = 32

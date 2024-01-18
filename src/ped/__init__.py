@@ -3,22 +3,21 @@
 
 Example: ped django.core.urlresolvers
 """
-from types import ModuleType
-from typing import Optional, Tuple, Any
 import argparse
 import importlib
+import importlib.metadata
 import inspect
 import os
 import shlex
 import subprocess
 import sys
-
-from .guess_module import guess_module, get_names_by_prefix
-from .pypath import patch_sys_path
-from .style import print_error, style, sprint, GREEN
 from pathlib import Path
+from types import ModuleType
+from typing import Any, Optional, Tuple
 
-__version__ = "2.1.0"
+from .guess_module import get_names_by_prefix, guess_module
+from .pypath import patch_sys_path
+from .style import GREEN, print_error, sprint, style
 
 
 def main() -> None:
@@ -47,7 +46,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "-e", "--editor", type=str, dest="editor", help="editor program"
     )
-    parser.add_argument("-v", "--version", action="version", version=__version__)
+    parser.add_argument(
+        "-v", "--version", action="version", version=importlib.metadata.version("ped")
+    )
     parser.add_argument(
         "-i",
         "--info",
@@ -89,13 +90,15 @@ def get_info(ipath: str) -> Tuple[str, str, Optional[int]]:
     module_name = ipath
     try:
         obj = import_object(module_name)
-    except ImportError:
+    except ImportError as error:
         guessed = guess_module(ipath)
         if guessed:
             module_name = guessed[0]
             obj = import_object(module_name)
         else:
-            raise ImportError(f'Cannot find any module that matches "{ipath}"')
+            raise ImportError(
+                f'Cannot find any module that matches "{ipath}"'
+            ) from error
     fpath = find_file(obj)
     if not fpath:
         raise ImportError(f'Cannot find any module that matches "{ipath}"')
@@ -113,8 +116,10 @@ def import_object(ipath: str) -> ModuleType:
         mod = importlib.import_module(module_name)
         try:
             return getattr(mod, symbol_name)
-        except AttributeError:
-            raise ImportError(f'Cannot import "{symbol_name}" from "{module_name}"')
+        except AttributeError as error:
+            raise ImportError(
+                f'Cannot import "{symbol_name}" from "{module_name}"'
+            ) from error
         raise err
 
 
