@@ -9,11 +9,7 @@ ped
 .. image:: https://github.com/sloria/ped/actions/workflows/build-release.yml/badge.svg
     :alt: build status
     :target: https://github.com/sloria/ped/actions/workflows/build-release.yml
-
-.. image:: https://badgen.net/badge/code%20style/black/000
-   :target: https://github.com/ambv/black
-   :alt: Code style: Black
-
+    
 Quickly open Python modules in your text editor.
 
 .. code-block:: bash
@@ -96,7 +92,7 @@ Zsh completion
 To install zsh completion, run::
 
     # The path given here will depend on your OS
-    $ python -m ped.install_completion > /usr/local/share/zsh/site-functions
+    $ python -m ped.install_completion > /usr/local/share/zsh/site-functions/_ped
 
 Editor integrations
 *******************
