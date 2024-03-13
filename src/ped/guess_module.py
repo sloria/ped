@@ -3,6 +3,7 @@
 Much of this code is adapted from IPython.core.completerlib
 (see NOTICE for license information).
 """
+
 import difflib
 import inspect
 import os
