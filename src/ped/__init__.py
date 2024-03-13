@@ -3,6 +3,7 @@
 
 Example: ped django.core.urlresolvers
 """
+
 import argparse
 import importlib
 import importlib.metadata
