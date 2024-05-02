@@ -20,7 +20,7 @@ _suffixes = all_suffixes()
 import_re = re.compile(
     r"(?P<name>[a-zA-Z_][a-zA-Z0-9_]*?)"
     r"(?P<package>[/\\]__init__)?"
-    r"(?P<suffix>%s)$" % r"|".join(re.escape(s) for s in _suffixes)
+    r"(?P<suffix>{})$".format(r"|".join(re.escape(s) for s in _suffixes))
 )
 
 
