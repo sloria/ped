@@ -29,7 +29,7 @@ Source = "https://github.com/sloria/ped/"
 
 [project.optional-dependencies]
 dev = ["ped[tests]", "tox"]
-tests = ["pytest", "pytest-mock", "scripttest==1.3"]
+tests = ["pytest", "pytest-mock", "scripttest==2.0"]
 
 [build-system]
 requires = ["flit_core<4"]
