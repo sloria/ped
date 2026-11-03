@@ -1,7 +1,6 @@
 import shutil
 import subprocess
 import sys
-from typing import List
 
 
 def patch_sys_path() -> None:
@@ -14,7 +13,7 @@ def patch_sys_path() -> None:
             sys.path.insert(0, each)
 
 
-def _get_external_sys_path() -> List[str]:
+def _get_external_sys_path() -> list[str]:
     executable = shutil.which("python") or "python"
     if executable == sys.executable:  # not in virtualenv
         return []

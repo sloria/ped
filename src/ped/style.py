@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import IO, Any, Optional
+from typing import IO, Any
 
 RED = 31
 GREEN = 32
@@ -9,7 +9,7 @@ RESET_ALL = 0
 
 
 def style(
-    text: str, fg: Optional[int] = None, *, bold: bool = False, file: IO = sys.stdout
+    text: str, fg: int | None = None, *, bold: bool = False, file: IO = sys.stdout
 ) -> str:
     use_color = not os.environ.get("NO_COLOR") and file.isatty()
     if use_color:

@@ -108,6 +108,11 @@ This was inspired by `IPython's <https://ipython.org/>`_ ``%edit`` magic.
 Changelog
 *********
 
+4.0.0 (unreleased)
+------------------
+
+- Test against Python 3.11-3.15. Older versions of Python are no longer supported.
+
 3.0.0 (2024-01-18)
 ------------------
 
