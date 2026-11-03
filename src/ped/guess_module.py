@@ -11,8 +11,8 @@ import re
 import sys
 import time
 import zipimport
+from collections.abc import Generator
 from importlib.machinery import all_suffixes
-from typing import Generator, List
 
 _suffixes = all_suffixes()
 
@@ -28,7 +28,7 @@ import_re = re.compile(
 TIMEOUT_GIVEUP = 20
 
 
-def guess_module(name: str, **kwargs) -> List:
+def guess_module(name: str, **kwargs) -> list:
     """Given a string, return a list of probably module paths.
 
     Example: ::
@@ -42,7 +42,7 @@ def guess_module(name: str, **kwargs) -> List:
     return difflib.get_close_matches(name, possible, **kwargs)
 
 
-def get_possible_modules(name: str) -> List[str]:
+def get_possible_modules(name: str) -> list[str]:
     mod = name.split(".")
     if len(mod) < 2:
         return get_root_modules()
@@ -56,7 +56,7 @@ def get_names_by_prefix(prefix: str) -> Generator[str, None, None]:
             yield name
 
 
-def get_root_modules() -> List[str]:
+def get_root_modules() -> list[str]:
     """Return a list containing the names of all the modules available in the
     folders of the pythonpath.
     """
@@ -76,7 +76,7 @@ def get_root_modules() -> List[str]:
     return rootmodules
 
 
-def module_list(path) -> List[str]:
+def module_list(path) -> list[str]:
     """
     Return the list containing the names of the modules available in the given
     folder.
@@ -92,7 +92,7 @@ def module_list(path) -> List[str]:
         # Build a list of all files in the directory and all files
         # in its subdirectories. For performance reasons, do not
         # recurse more than one level into subdirectories.
-        files: List[str] = []
+        files: list[str] = []
         for root, dirs, nondirs in os.walk(path, followlinks=True):
             subdir = root[len(path) + 1 :]
             if subdir:
@@ -116,7 +116,7 @@ def module_list(path) -> List[str]:
     return list(set(modules))
 
 
-def try_import(mod: str, only_modules=False) -> List[str]:
+def try_import(mod: str, only_modules=False) -> list[str]:
     try:
         m = __import__(mod)
     except Exception:

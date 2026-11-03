@@ -14,7 +14,7 @@ import subprocess
 import sys
 from pathlib import Path
 from types import ModuleType
-from typing import Any, Optional, Tuple
+from typing import Any
 
 from .guess_module import get_names_by_prefix, guess_module
 from .pypath import patch_sys_path
@@ -60,7 +60,7 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def ped(module: str, editor: Optional[str] = None, info: bool = False) -> None:
+def ped(module: str, editor: str | None = None, info: bool = False) -> None:
     module_name, fpath, lineno = get_info(module)
     if info:
         out = f"{module_name} {fpath}"
@@ -82,7 +82,7 @@ def complete(ipath: str) -> None:
         print(name)
 
 
-def get_info(ipath: str) -> Tuple[str, str, Optional[int]]:
+def get_info(ipath: str) -> tuple[str, str, int | None]:
     """Return module name, file path, and line number.
 
     :param str ipath: Import path to module, function, or class. May be a partial name,
@@ -132,7 +132,7 @@ def _get_wrapped(obj: Any) -> Any:
     return obj
 
 
-def find_file(obj: Any) -> Optional[str]:
+def find_file(obj: Any) -> str | None:
     """Find the absolute path to the file where an object was defined.
 
     This is essentially a robust wrapper around `inspect.getabsfile`.
@@ -165,7 +165,7 @@ def find_file(obj: Any) -> Optional[str]:
 
 
 # Adapted from IPython.core.oinspect.find_source_lines
-def find_source_lines(obj: Any) -> Optional[int]:
+def find_source_lines(obj: Any) -> int | None:
     """Find the line number in a file where an object was defined.
 
     This is essentially a robust wrapper around `inspect.getsourcelines`.
@@ -174,10 +174,13 @@ def find_source_lines(obj: Any) -> Optional[int]:
     """
     obj = _get_wrapped(obj)
 
-    lineno: Optional[int]
+    lineno: int | None
     try:
         try:
-            lineno = inspect.getsourcelines(obj)[1]
+            lines, lineno = inspect.getsourcelines(obj)
+            # Python 3.13+ returns a blank line for empty files instead of raising
+            if not "".join(lines).strip():
+                return None
         except TypeError:
             # For instances, try the class object like getsource() does
             if hasattr(obj, "__class__"):
@@ -220,7 +223,7 @@ SUPPORTS_LINENO = {"vim", "gvim", "vi", "nvim", "mvim", "emacs", "jed", "nano"}
 
 
 def get_editor_command(
-    filename: str, lineno: Optional[int] = None, editor: Optional[str] = None
+    filename: str, lineno: int | None = None, editor: str | None = None
 ) -> str:
     editor = editor or get_editor()
     # Enclose in quotes if necessary and legal
@@ -234,7 +237,7 @@ def get_editor_command(
 
 
 def edit_file(
-    filename: str, lineno: Optional[int] = None, editor: Optional[str] = None
+    filename: str, lineno: int | None = None, editor: str | None = None
 ) -> None:
     command = get_editor_command(filename, lineno=lineno, editor=editor)
     try:
