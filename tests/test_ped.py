@@ -63,6 +63,10 @@ def test_get_editor_command():
     )
 
 
+def test_get_editor_command_whitespace_editor_ignores_lineno():
+    assert ped.get_editor_command("foo.py", lineno=2, editor=" ") == '  "foo.py"'
+
+
 def test_get_info():
     name, fpath, lineno = ped.get_info("argparse.ArgumentPars")
     assert name == "argparse.ArgumentParser"
