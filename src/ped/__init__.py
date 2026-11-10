@@ -229,7 +229,8 @@ def get_editor_command(
     # Enclose in quotes if necessary and legal
     if " " in editor and os.path.isfile(editor) and editor[0] != '"':
         editor = f'"{editor}"'
-    if lineno and shlex.split(editor)[0] in SUPPORTS_LINENO:
+    editor_name = shlex.split(editor)[:1]
+    if lineno and editor_name and editor_name[0] in SUPPORTS_LINENO:
         command = f'{editor} +{lineno:d} "{filename}"'
     else:
         command = f'{editor} "{filename}"'
